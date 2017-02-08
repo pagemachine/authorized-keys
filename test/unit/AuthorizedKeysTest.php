@@ -15,6 +15,7 @@ namespace pagemachine\AuthorizedKeys\Test;
 use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStream;
 use pagemachine\AuthorizedKeys\AuthorizedKeys;
+use pagemachine\AuthorizedKeys\Exception\FilePermissionException;
 use pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 use pagemachine\AuthorizedKeys\PublicKey;
 
@@ -55,6 +56,21 @@ FILE;
     $authorizedKeys = AuthorizedKeys::fromFile($file->url());
 
     $this->assertEquals($content, (string) $authorizedKeys);
+  }
+
+  /**
+   * @test
+   */
+  public function throwsExceptionOnFileReadError() {
+
+    $directory = vfsStream::setup();
+    $file = vfsStream::newFile('authorized_keys')
+      ->chmod(0)
+      ->at($directory);
+
+    $this->expectException(FilePermissionException::class);
+
+    AuthorizedKeys::fromFile($file->url());
   }
 
   /**

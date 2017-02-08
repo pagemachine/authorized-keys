@@ -1,6 +1,7 @@
 <?php
 namespace pagemachine\AuthorizedKeys;
 
+use pagemachine\AuthorizedKeys\Exception\FilePermissionException;
 use pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 
 /*
@@ -49,10 +50,16 @@ class AuthorizedKeys {
    *
    * @param string $file path of authorized_keys file
    * @return AuthorizedKeys
+   * @throws FilePermissionException if the authorized_keys file cannot be read
    */
   public static function fromFile($file) {
 
-    $content = file_get_contents($file);
+    $content = @file_get_contents($file);
+
+    if ($content === false) {
+
+      throw new FilePermissionException(sprintf('Could not read file "%s"', $file), 1486563469);
+    }
 
     return new static($content);
   }
