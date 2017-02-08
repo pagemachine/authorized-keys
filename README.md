@@ -32,7 +32,7 @@ $key = new PublicKey('ssh-rsa AAA...');
 $authorizedKeys->removeKey($key);
 ```
 
-To close things off, write back the file:
+To close things off, write back the file, all empty lines and comments will be left unchanged:
 
 ```php
 $authorizedKeys->toFile($path);
