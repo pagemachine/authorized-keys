@@ -18,6 +18,11 @@ namespace pagemachine\AuthorizedKeys;
 class PublicKey {
 
   /**
+   * @var string $options
+   */
+  protected $options;
+
+  /**
    * @var string $type
    */
   protected $type;
@@ -39,13 +44,30 @@ class PublicKey {
 
     $parts = $this->parse($key);
 
-    foreach (['type', 'key', 'comment'] as $part) {
+    foreach (['options', 'type', 'key', 'comment'] as $part) {
 
       if (isset($parts[$part])) {
 
         $this->$part = $parts[$part];
       }
     }
+  }
+
+  /**
+   * @return string
+   */
+  public function getOptions() {
+
+    return $this->options;
+  }
+
+  /**
+   * @param string $options
+   * @return void
+   */
+  public function setOptions($options) {
+
+    $this->options = $options;
   }
 
   /**
@@ -106,7 +128,15 @@ class PublicKey {
    */
   public function __toString() {
 
-    $parts = [$this->type, $this->key];
+    $parts = [];
+
+    if (!empty($this->options)) {
+
+      $parts[] = $this->options;
+    }
+
+    $parts[] = $this->type;
+    $parts[] = $this->key;
 
     if (!empty($this->comment)) {
 
@@ -125,6 +155,7 @@ class PublicKey {
   protected function parse($key) {
 
     static $pattern = '/
+      (?<options>[^\s]+\s+)?
       (?<type>
         ecdsa-sha2-nistp256
         |
