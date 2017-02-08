@@ -22,16 +22,33 @@ class PublicKeyTest extends TestCase {
 
   /**
    * @test
+   * @dataProvider keys
+   *
+   * @param string $key
    */
-  public function constructsFromString() {
-
-    $key = <<<FILE
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFy1wC52dQBLnJ8dwQCsTwTuDwCQAhb/2joe6oK4Qm6XBI89BerXTsTvV8ekxg3LjvD6LjclJR6WsDQPA8cJeKXl/XDtcd+a355fth1sRZwe20Zh7NrpfhGD8Pb4HWrnJz0jeVXn5M/FppvRFl4RX7dhz5zuHFIb8BeCOmoNid1vTucp9HCr9PkCcahRpw4QXU5v2ETXbbxmftGz7PBvGHR2In1nm3MBBlX++11sDhlYUCWqJXjfH0dvgpWvEtknJoyHjX8MvNV6oXeh59ow6unIOJjXPkdyICXjZCJtBdVK2pc3mYKxaDWNN7MvLelduw941CXaa4aE2EFDa0BLTJ mbrodala@pagemachine.de
-FILE;
+  public function constructsFromString($key) {
 
     $publicKey = new PublicKey($key);
 
     $this->assertEquals($key, (string) $publicKey);
+  }
+
+  /**
+   * @return array
+   */
+  public function keys() {
+
+    $options = 'command="/bin/test"';
+    $type = 'ssh-rsa';
+    $key = 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDFy1wC52dQBLnJ8dwQCsTwTuDwCQAhb/2joe6oK4Qm6XBI89BerXTsTvV8ekxg3LjvD6LjclJR6WsDQPA8cJeKXl/XDtcd+a355fth1sRZwe20Zh7NrpfhGD8Pb4HWrnJz0jeVXn5M/FppvRFl4RX7dhz5zuHFIb8BeCOmoNid1vTucp9HCr9PkCcahRpw4QXU5v2ETXbbxmftGz7PBvGHR2In1nm3MBBlX++11sDhlYUCWqJXjfH0dvgpWvEtknJoyHjX8MvNV6oXeh59ow6unIOJjXPkdyICXjZCJtBdVK2pc3mYKxaDWNN7MvLelduw941CXaa4aE2EFDa0BLTJ';
+    $comment = 'mbrodala@pagemachine.de';
+
+    return [
+      'minimum' => [implode(' ', [$type, $key])],
+      'with comment' => [implode(' ', [$type, $key, $comment])],
+      'with options' => [implode(' ', [$options, $type, $key])],
+      'with options and comment' => [implode(' ', [$options, $type, $key, $comment])],
+    ];
   }
 
   /**
