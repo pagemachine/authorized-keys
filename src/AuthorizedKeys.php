@@ -49,6 +49,16 @@ class AuthorizedKeys {
   }
 
   /**
+   * Returns the file content as string
+   *
+   * @return string
+   */
+  public function __toString() {
+
+    return implode("\n", $this->lines);
+  }
+
+  /**
    * Parses content of a authorized_keys file
    *
    * @param string $content content of the authorized_keys file
@@ -68,15 +78,5 @@ class AuthorizedKeys {
     }
 
     return $lines;
-  }
-
-  /**
-   * Returns the file content as string
-   *
-   * @return string
-   */
-  public function __toString() {
-
-    return implode("\n", $this->lines);
   }
 }
