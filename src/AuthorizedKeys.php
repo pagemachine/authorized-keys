@@ -59,6 +59,14 @@ class AuthorizedKeys {
     $lines = explode("\n", $content);
     $lines = array_map('trim', $lines);
 
+    foreach ($lines as $i => $line) {
+
+      if (!empty($line) || $line[0] !== '#') {
+
+        $lines[$i] = new PublicKey($line);
+      }
+    }
+
     return $lines;
   }
 
