@@ -36,6 +36,19 @@ class AuthorizedKeys {
   }
 
   /**
+   * Creates a new instance from a file
+   *
+   * @param string $file path of authorized_keys file
+   * @return AuthorizedKeys
+   */
+  public static function fromFile($file) {
+
+    $content = file_get_contents($file);
+
+    return new static($content);
+  }
+
+  /**
    * Parses content of a authorized_keys file
    *
    * @param string $content content of the authorized_keys file
