@@ -25,6 +25,13 @@ class AuthorizedKeys {
   protected $lines = [];
 
   /**
+   * Map of keys to file lines
+   *
+   * @var array
+   */
+  protected $keyLines = [];
+
+  /**
    * @param string $content content of the authorized_keys file
    */
   public function __construct($content = null) {
@@ -59,6 +66,21 @@ class AuthorizedKeys {
   }
 
   /**
+   * Remove a public key from the file
+   *
+   * @param PublicKey $key a public key
+   */
+  public function removeKey(PublicKey $key) {
+
+    $index = $key->getKey();
+
+    if (isset($this->keyLines[$index])) {
+
+      unset($this->lines[$this->keyLines[$index]], $this->keyLines[$index]);
+    }
+  }
+
+  /**
    * Returns the file content as string
    *
    * @return string
@@ -83,7 +105,10 @@ class AuthorizedKeys {
 
       if (!empty($line) || $line[0] !== '#') {
 
-        $lines[$i] = new PublicKey($line);
+        $publicKey = new PublicKey($line);
+        $lines[$i] = $publicKey;
+
+        $this->keyLines[$publicKey->getKey()] = $i;
       }
     }
 
