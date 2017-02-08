@@ -15,6 +15,7 @@ namespace pagemachine\AuthorizedKeys\Test;
 use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStream;
 use pagemachine\AuthorizedKeys\AuthorizedKeys;
+use pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 use pagemachine\AuthorizedKeys\PublicKey;
 
 /**
@@ -160,5 +161,21 @@ ssh-rsa BBB second
 FILE;
 
     $this->assertEquals($expected, (string) $authorizedKeys);
+  }
+
+  /**
+   * @test
+   */
+  public function throwsExceptionOnInvalidKeys() {
+
+    $content = <<<FILE
+ssh-rsa AAA first
+foo BBB second
+FILE;
+
+    $this->expectException(InvalidKeyException::class);
+    $this->expectExceptionMessageRegExp('/Invalid key at line 2: .+/');
+
+    new AuthorizedKeys($content);
   }
 }

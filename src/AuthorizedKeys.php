@@ -1,6 +1,8 @@
 <?php
 namespace pagemachine\AuthorizedKeys;
 
+use pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
+
 /*
  * This file is part of the pagemachine Authorized Keys project.
  *
@@ -129,7 +131,14 @@ class AuthorizedKeys {
 
       if (!empty($line) && $line[0] !== '#') {
 
-        $publicKey = new PublicKey($line);
+        try {
+
+          $publicKey = new PublicKey($line);
+        } catch (InvalidKeyException $e) {
+
+          throw new InvalidKeyException(sprintf('Invalid key at line %d: %s', $i + 1, $e->getMessage()), 1486561427);
+        }
+
         $lines[$i] = $publicKey;
 
         $this->keyLines[$publicKey->getKey()] = $i;
