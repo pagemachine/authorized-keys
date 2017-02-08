@@ -110,7 +110,7 @@ class AuthorizedKeys {
 
     foreach ($lines as $i => $line) {
 
-      if (!empty($line) || $line[0] !== '#') {
+      if (!empty($line) && $line[0] !== '#') {
 
         $publicKey = new PublicKey($line);
         $lines[$i] = $publicKey;

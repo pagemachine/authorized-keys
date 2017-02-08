@@ -42,6 +42,7 @@ FILE;
   public function constructsFromFile() {
 
     $content = <<<FILE
+# A comment
 ssh-rsa AAA test
 FILE;
 
