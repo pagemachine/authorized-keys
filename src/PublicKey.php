@@ -1,6 +1,8 @@
 <?php
 namespace pagemachine\AuthorizedKeys;
 
+use pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
+
 /*
  * This file is part of the pagemachine Authorized Keys project.
  *
@@ -179,6 +181,11 @@ class PublicKey {
 
     preg_match($pattern, $key, $parts);
     $parts = array_map('trim', $parts);
+
+    if (empty($parts['type'])) {
+
+      throw new InvalidKeyException('Invalid key type', 1486561051);
+    }
 
     return $parts;
   }

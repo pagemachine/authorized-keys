@@ -13,6 +13,7 @@ namespace pagemachine\AuthorizedKeys\Test;
  */
 
 use PHPUnit\Framework\TestCase;
+use pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 use pagemachine\AuthorizedKeys\PublicKey;
 
 /**
@@ -87,5 +88,15 @@ FILE;
     $this->assertEquals('foo', $publicKey->getComment());
 
     $this->assertEquals('agent-forwarding ssh-dss BBB foo', (string) $publicKey);
+  }
+
+  /**
+   * @test
+   */
+  public function throwsExceptionOnInvalidType() {
+
+    $this->expectException(InvalidKeyException::class);
+
+    new PublicKey('foo AAA');
   }
 }
