@@ -1,5 +1,7 @@
 # Authorized Keys
 
+[![Build Status](https://img.shields.io/travis/pagemachine/authorized-keys/master.svg?style=flat-square)](https://travis-ci.org/pagemachine/authorized-keys)
+
 Read, edit and write the SSH `authorized_keys` file.
 
 ## Installation
