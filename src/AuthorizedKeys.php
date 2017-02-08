@@ -49,6 +49,16 @@ class AuthorizedKeys {
   }
 
   /**
+   * Add a public key to the file
+   *
+   * @param PublicKey $key a public key
+   */
+  public function addKey(PublicKey $key) {
+
+    $this->lines[] = $key;
+  }
+
+  /**
    * Returns the file content as string
    *
    * @return string

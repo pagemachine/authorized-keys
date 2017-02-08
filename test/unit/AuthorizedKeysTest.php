@@ -15,6 +15,7 @@ namespace pagemachine\AuthorizedKeys\Test;
 use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStream;
 use pagemachine\AuthorizedKeys\AuthorizedKeys;
+use pagemachine\AuthorizedKeys\PublicKey;
 
 /**
  * Testcase for pagemachine\AuthorizedKeys\AuthorizedKeys
@@ -52,5 +53,26 @@ FILE;
     $authorizedKeys = AuthorizedKeys::fromFile($file->url());
 
     $this->assertEquals($content, (string) $authorizedKeys);
+  }
+
+  /**
+   * @test
+   */
+  public function addsKeys() {
+
+    $authorizedKeys = new AuthorizedKeys('');
+
+    $firstKey = new PublicKey('ssh-rsa AAA first');
+    $authorizedKeys->addKey($firstKey);
+
+    $secondKey = new PublicKey('ssh-rsa BBB second');
+    $authorizedKeys->addKey($secondKey);
+
+    $expected = <<<FILE
+ssh-rsa AAA first
+ssh-rsa BBB second
+FILE;
+
+    $this->assertEquals($expected, (string) $authorizedKeys);
   }
 }
