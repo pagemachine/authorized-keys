@@ -37,3 +37,11 @@ To close things off, write back the file, all empty lines and comments will be l
 ```php
 $authorizedKeys->toFile($path);
 ```
+
+You can also iterate all keys:
+
+```
+foreach ($authorizedKeys as $key) {
+    // Do something with $key
+}
+```
