@@ -173,9 +173,8 @@ class PublicKey {
         |
         ssh-rsa
       )
-      \s+
-      (?<key>[^\s]+)
-      (?<comment>.+)?
+      (?<key>\s+[^\s]+)?
+      (?<comment>\s+.+)?
     /x';
     $parts = [];
 
@@ -185,6 +184,11 @@ class PublicKey {
     if (empty($parts['type'])) {
 
       throw new InvalidKeyException('Invalid key type', 1486561051);
+    }
+
+    if (empty($parts['key'])) {
+
+      throw new InvalidKeyException('Empty key content', 1486561621);
     }
 
     return $parts;

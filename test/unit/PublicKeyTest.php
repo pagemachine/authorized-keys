@@ -96,7 +96,19 @@ FILE;
   public function throwsExceptionOnInvalidType() {
 
     $this->expectException(InvalidKeyException::class);
+    $this->expectExceptionCode(1486561051);
 
     new PublicKey('foo AAA');
+  }
+
+  /**
+   * @test
+   */
+  public function throwsExceptionOnEmptyKey() {
+
+    $this->expectException(InvalidKeyException::class);
+    $this->expectExceptionCode(1486561621);
+
+    new PublicKey('ssh-rsa');
   }
 }
