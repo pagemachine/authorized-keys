@@ -38,16 +38,11 @@ class PublicKeyTest extends TestCase {
    */
   public function keys() {
 
-    $options = 'command="/bin/test"';
-    $type = 'ssh-rsa';
-    $key = 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDFy1wC52dQBLnJ8dwQCsTwTuDwCQAhb/2joe6oK4Qm6XBI89BerXTsTvV8ekxg3LjvD6LjclJR6WsDQPA8cJeKXl/XDtcd+a355fth1sRZwe20Zh7NrpfhGD8Pb4HWrnJz0jeVXn5M/FppvRFl4RX7dhz5zuHFIb8BeCOmoNid1vTucp9HCr9PkCcahRpw4QXU5v2ETXbbxmftGz7PBvGHR2In1nm3MBBlX++11sDhlYUCWqJXjfH0dvgpWvEtknJoyHjX8MvNV6oXeh59ow6unIOJjXPkdyICXjZCJtBdVK2pc3mYKxaDWNN7MvLelduw941CXaa4aE2EFDa0BLTJ';
-    $comment = 'mbrodala@pagemachine.de';
-
     return [
-      'minimum' => [implode(' ', [$type, $key])],
-      'with comment' => [implode(' ', [$type, $key, $comment])],
-      'with options' => [implode(' ', [$options, $type, $key])],
-      'with options and comment' => [implode(' ', [$options, $type, $key, $comment])],
+      'minimum' => ['ssh-rsa AAA'],
+      'with comment' => ['ssh-rsa AAA test'],
+      'with options' => ['command="/bin/test" ssh-rsa AAA'],
+      'with options and comment' => ['command="/bin/test" ssh-rsa AAA test'],
     ];
   }
 
@@ -57,15 +52,15 @@ class PublicKeyTest extends TestCase {
   public function parsesKeyParts() {
 
     $key = <<<FILE
-command="/bin/test" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFy1wC52dQBLnJ8dwQCsTwTuDwCQAhb/2joe6oK4Qm6XBI89BerXTsTvV8ekxg3LjvD6LjclJR6WsDQPA8cJeKXl/XDtcd+a355fth1sRZwe20Zh7NrpfhGD8Pb4HWrnJz0jeVXn5M/FppvRFl4RX7dhz5zuHFIb8BeCOmoNid1vTucp9HCr9PkCcahRpw4QXU5v2ETXbbxmftGz7PBvGHR2In1nm3MBBlX++11sDhlYUCWqJXjfH0dvgpWvEtknJoyHjX8MvNV6oXeh59ow6unIOJjXPkdyICXjZCJtBdVK2pc3mYKxaDWNN7MvLelduw941CXaa4aE2EFDa0BLTJ mbrodala@pagemachine.de
+command="/bin/test" ssh-rsa AAA test
 FILE;
 
     $publicKey = new PublicKey($key);
 
     $this->assertEquals('command="/bin/test"', $publicKey->getOptions());
     $this->assertEquals('ssh-rsa', $publicKey->getType());
-    $this->assertEquals('AAAAB3NzaC1yc2EAAAADAQABAAABAQDFy1wC52dQBLnJ8dwQCsTwTuDwCQAhb/2joe6oK4Qm6XBI89BerXTsTvV8ekxg3LjvD6LjclJR6WsDQPA8cJeKXl/XDtcd+a355fth1sRZwe20Zh7NrpfhGD8Pb4HWrnJz0jeVXn5M/FppvRFl4RX7dhz5zuHFIb8BeCOmoNid1vTucp9HCr9PkCcahRpw4QXU5v2ETXbbxmftGz7PBvGHR2In1nm3MBBlX++11sDhlYUCWqJXjfH0dvgpWvEtknJoyHjX8MvNV6oXeh59ow6unIOJjXPkdyICXjZCJtBdVK2pc3mYKxaDWNN7MvLelduw941CXaa4aE2EFDa0BLTJ', $publicKey->getKey());
-    $this->assertEquals('mbrodala@pagemachine.de', $publicKey->getComment());
+    $this->assertEquals('AAA', $publicKey->getKey());
+    $this->assertEquals('test', $publicKey->getComment());
   }
 
   /**
@@ -74,7 +69,7 @@ FILE;
   public function setsKeyParts() {
 
     $key = <<<FILE
-command="/bin/test" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFy1wC52dQBLnJ8dwQCsTwTuDwCQAhb/2joe6oK4Qm6XBI89BerXTsTvV8ekxg3LjvD6LjclJR6WsDQPA8cJeKXl/XDtcd+a355fth1sRZwe20Zh7NrpfhGD8Pb4HWrnJz0jeVXn5M/FppvRFl4RX7dhz5zuHFIb8BeCOmoNid1vTucp9HCr9PkCcahRpw4QXU5v2ETXbbxmftGz7PBvGHR2In1nm3MBBlX++11sDhlYUCWqJXjfH0dvgpWvEtknJoyHjX8MvNV6oXeh59ow6unIOJjXPkdyICXjZCJtBdVK2pc3mYKxaDWNN7MvLelduw941CXaa4aE2EFDa0BLTJ mbrodala@pagemachine.de
+command="/bin/test" ssh-rsa AAA test
 FILE;
 
     $publicKey = new PublicKey($key);
@@ -85,12 +80,12 @@ FILE;
     $publicKey->setType('ssh-dss');
     $this->assertEquals('ssh-dss', $publicKey->getType());
 
-    $publicKey->setKey('QWERTZ');
-    $this->assertEquals('QWERTZ', $publicKey->getKey());
+    $publicKey->setKey('BBB');
+    $this->assertEquals('BBB', $publicKey->getKey());
 
-    $publicKey->setComment('Test');
-    $this->assertEquals('Test', $publicKey->getComment());
+    $publicKey->setComment('foo');
+    $this->assertEquals('foo', $publicKey->getComment());
 
-    $this->assertEquals('agent-forwarding ssh-dss QWERTZ Test', (string) $publicKey);
+    $this->assertEquals('agent-forwarding ssh-dss BBB foo', (string) $publicKey);
   }
 }
