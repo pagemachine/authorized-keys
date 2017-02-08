@@ -18,6 +18,14 @@ $path = '/home/foo/.ssh/authorized_keys'
 $authorizedKeys = AuthorizedKeys::fromFile($path);
 ```
 
+You can easily iterate all keys in the file, comments and empty lines will be skipped:
+
+```
+foreach ($authorizedKeys as $key) {
+    // Do something with $key
+}
+```
+
 To add a key, create an instance of `PublicKey` and add it to the file:
 
 ```php
@@ -34,16 +42,8 @@ $key = new PublicKey('ssh-rsa AAA...');
 $authorizedKeys->removeKey($key);
 ```
 
-To close things off, write back the file, all empty lines and comments will be left unchanged:
+To close things off, write back the file, comments and empty lines will be left unchanged:
 
 ```php
 $authorizedKeys->toFile($path);
-```
-
-You can also iterate all keys:
-
-```
-foreach ($authorizedKeys as $key) {
-    // Do something with $key
-}
 ```
