@@ -58,6 +58,20 @@ class AuthorizedKeys {
   }
 
   /**
+   * Writes all content to the filesystem
+   *
+   * Also ensure that the written file has the recommended permissions,
+   * namely only readable and writable to the current user
+   *
+   * @param string $file path of the authorized_keys file
+   */
+  public function toFile($file) {
+
+    file_put_contents($file, (string) $this);
+    chmod($file, 0600);
+  }
+
+  /**
    * Return all public keys in the file
    *
    * @return PublicKey[]
