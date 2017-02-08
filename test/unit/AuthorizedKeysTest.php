@@ -121,20 +121,22 @@ FILE;
   public function removesKeys() {
 
     $content = <<<FILE
+# A comment
 ssh-rsa AAA first
 ssh-rsa BBB second
 FILE;
 
     $authorizedKeys = new AuthorizedKeys($content);
-    $publicKey = new PublicKey('ssh-rsa AAA');
+    $firstKey = new PublicKey('ssh-rsa AAA');
 
-    $authorizedKeys->removeKey($publicKey);
+    $authorizedKeys->removeKey($firstKey);
 
     $expected = <<<FILE
+# A comment
 ssh-rsa BBB second
 FILE;
 
-    $this->assertEquals('ssh-rsa BBB second', (string) $authorizedKeys);
+    $this->assertEquals($expected, (string) $authorizedKeys);
   }
 
   /**
@@ -148,15 +150,15 @@ ssh-rsa BBB second
 FILE;
 
     $authorizedKeys = new AuthorizedKeys($content);
-    $publicKey = new PublicKey('ssh-rsa AAA');
+    $firstKey = new PublicKey('ssh-rsa AAA');
 
-    $authorizedKeys->removeKey($publicKey);
-    $authorizedKeys->removeKey($publicKey);
+    $authorizedKeys->removeKey($firstKey);
+    $authorizedKeys->removeKey($firstKey);
 
     $expected = <<<FILE
 ssh-rsa BBB second
 FILE;
 
-    $this->assertEquals('ssh-rsa BBB second', (string) $authorizedKeys);
+    $this->assertEquals($expected, (string) $authorizedKeys);
   }
 }
