@@ -97,4 +97,27 @@ FILE;
 
     $this->assertEquals('ssh-rsa BBB second', (string) $authorizedKeys);
   }
+
+  /**
+   * @test
+   */
+  public function removesKeysOnce() {
+
+    $content = <<<FILE
+ssh-rsa AAA first
+ssh-rsa BBB second
+FILE;
+
+    $authorizedKeys = new AuthorizedKeys($content);
+    $publicKey = new PublicKey('ssh-rsa AAA');
+
+    $authorizedKeys->removeKey($publicKey);
+    $authorizedKeys->removeKey($publicKey);
+
+    $expected = <<<FILE
+ssh-rsa BBB second
+FILE;
+
+    $this->assertEquals('ssh-rsa BBB second', (string) $authorizedKeys);
+  }
 }
