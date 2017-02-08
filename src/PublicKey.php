@@ -48,7 +48,9 @@ class PublicKey {
 
       if (isset($parts[$part])) {
 
-        $this->$part = $parts[$part];
+        $setter = 'set' . ucfirst($part);
+
+        $this->$setter($parts[$part]);
       }
     }
   }
