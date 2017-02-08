@@ -59,6 +59,25 @@ FILE;
   /**
    * @test
    */
+  public function getsKeys() {
+
+    $content = <<<FILE
+# A comment
+ssh-rsa AAA first
+
+ssh-rsa BBB second
+FILE;
+
+    $authorizedKeys = new AuthorizedKeys($content);
+
+    $keys = $authorizedKeys->getKeys();
+
+    $this->assertCount(2, $keys);
+  }
+
+  /**
+   * @test
+   */
   public function addsKeys() {
 
     $authorizedKeys = new AuthorizedKeys('');

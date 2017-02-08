@@ -56,6 +56,23 @@ class AuthorizedKeys {
   }
 
   /**
+   * Return all public keys in the file
+   *
+   * @return PublicKey[]
+   */
+  public function getKeys() {
+
+    $keys = [];
+
+    foreach ($this->keyLines as $line) {
+
+      $keys[] = $this->lines[$line];
+    }
+
+    return $keys;
+  }
+
+  /**
    * Add a public key to the file
    *
    * @param PublicKey $key a public key
