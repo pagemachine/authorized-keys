@@ -159,6 +159,32 @@ FILE;
     $keys = $authorizedKeys->getKeys();
 
     $this->assertCount(2, $keys);
+    $this->assertContainsOnlyInstancesOf(PublicKey::class, $keys);
+  }
+
+  /**
+   * @test
+   */
+  public function getsKeysByIteration() {
+
+    $content = <<<FILE
+# A comment
+ssh-rsa AAA first
+
+ssh-rsa BBB second
+FILE;
+
+    $authorizedKeys = new AuthorizedKeys($content);
+
+    $keys = [];
+
+    foreach ($authorizedKeys as $key) {
+
+      $keys[] = $key;
+    }
+
+    $this->assertCount(2, $keys);
+    $this->assertContainsOnlyInstancesOf(PublicKey::class, $keys);
   }
 
   /**

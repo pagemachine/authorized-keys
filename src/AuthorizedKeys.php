@@ -18,7 +18,7 @@ use pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 /**
  * Manages the authorized_keys file
  */
-class AuthorizedKeys {
+class AuthorizedKeys implements \IteratorAggregate {
 
   /**
    * Lines of the file
@@ -147,6 +147,17 @@ class AuthorizedKeys {
   public function __toString() {
 
     return implode("\n", $this->lines);
+  }
+
+  /**
+   * @return \Traversable
+   */
+  public function getIterator() {
+
+    foreach ($this->getKeys() as $key) {
+
+      yield $key;
+    }
   }
 
   /**
