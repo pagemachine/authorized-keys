@@ -37,15 +37,14 @@ class PublicKey {
    */
   public function __construct($key) {
 
-    $parts = explode(' ', $key);
-    array_map('trim', $parts);
+    $parts = $this->parse($key);
 
-    $this->type = $parts[0];
-    $this->key = $parts[1];
+    foreach (['type', 'key', 'comment'] as $part) {
 
-    if (isset($parts[2])) {
+      if (isset($parts[$part])) {
 
-      $this->comment = $parts[2];
+        $this->$part = $parts[$part];
+      }
     }
   }
 
@@ -115,5 +114,39 @@ class PublicKey {
     }
 
     return implode(' ', $parts);
+  }
+
+  /**
+   * Parses a publie key string
+   *
+   * @param string $key public key string
+   * @return array
+   */
+  protected function parse($key) {
+
+    static $pattern = '/
+      (?<type>
+        ecdsa-sha2-nistp256
+        |
+        ecdsa-sha2-nistp384
+        |
+        ecdsa-sha2-nistp521
+        |
+        ssh-dss
+        |
+        ssh-ed25519
+        |
+        ssh-rsa
+      )
+      \s+
+      (?<key>[^\s]+)
+      (?<comment>.+)?
+    /x';
+    $parts = [];
+
+    preg_match($pattern, $key, $parts);
+    $parts = array_map('trim', $parts);
+
+    return $parts;
   }
 }
