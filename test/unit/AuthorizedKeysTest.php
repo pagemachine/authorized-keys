@@ -101,6 +101,50 @@ FILE;
   /**
    * @test
    */
+  public function throwsExceptionOnFileWriteError() {
+
+    $content = <<<FILE
+ssh-rsa AAA test
+FILE;
+
+    $authorizedKeys = new AuthorizedKeys($content);
+
+    $directory = vfsStream::setup();
+    $file = vfsStream::newFile('authorized_keys')
+      ->chmod(0)
+      ->at($directory);
+
+    $this->expectException(FilePermissionException::class);
+    $this->expectExceptionCode(1486563789);
+
+    $authorizedKeys->toFile($file->url());
+  }
+
+  /**
+   * @test
+   */
+  public function throwsExceptionOnFilePermissionFixError() {
+
+    $content = <<<FILE
+ssh-rsa AAA test
+FILE;
+
+    $authorizedKeys = new AuthorizedKeys($content);
+
+    $directory = vfsStream::setup();
+    $file = vfsStream::newFile('authorized_keys')
+      ->chown(1)
+      ->at($directory);
+
+    $this->expectException(FilePermissionException::class);
+    $this->expectExceptionCode(1486563909);
+
+    $authorizedKeys->toFile($file->url());
+  }
+
+  /**
+   * @test
+   */
   public function getsKeys() {
 
     $content = <<<FILE

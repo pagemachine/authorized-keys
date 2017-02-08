@@ -71,11 +71,23 @@ class AuthorizedKeys {
    * namely only readable and writable to the current user
    *
    * @param string $file path of the authorized_keys file
+   * @throws FilePermissionException if the authorized_keys file cannot be written or permissions cannot be set
    */
   public function toFile($file) {
 
-    file_put_contents($file, (string) $this);
-    chmod($file, 0600);
+    $result = @file_put_contents($file, (string) $this);
+
+    if ($result === false) {
+
+      throw new FilePermissionException(sprintf('Could not write file "%s"', $file), 1486563789);
+    }
+
+    $result = @chmod($file, 0600);
+
+    if ($result === false) {
+
+      throw new FilePermissionException(sprintf('Could not change permissions of file "%s"', $file), 1486563909);
+    }
   }
 
   /**
