@@ -47,3 +47,5 @@ To close things off, write back the file, comments and empty lines will be left 
 ```php
 $authorizedKeys->toFile($path);
 ```
+
+The permissions of the file will be changed to 0600, namely readable and writable by the owner but nobody else.
