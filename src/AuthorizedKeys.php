@@ -62,7 +62,14 @@ class AuthorizedKeys {
    */
   public function addKey(PublicKey $key) {
 
-    $this->lines[] = $key;
+    $index = $key->getKey();
+
+    if (!isset($this->keyLines[$index])) {
+
+      $this->keyLines[$index] = count($this->lines);
+    }
+
+    $this->lines[$this->keyLines[$index]] = $key;
   }
 
   /**

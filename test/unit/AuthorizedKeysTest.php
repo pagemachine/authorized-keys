@@ -79,6 +79,25 @@ FILE;
   /**
    * @test
    */
+  public function addsKeysOnce() {
+
+    $authorizedKeys = new AuthorizedKeys('');
+
+    $publicKey = new PublicKey('ssh-rsa AAA test');
+
+    $authorizedKeys->addKey($publicKey);
+    $authorizedKeys->addKey($publicKey);
+
+    $expected = <<<FILE
+ssh-rsa AAA test
+FILE;
+
+    $this->assertEquals($expected, (string) $authorizedKeys);
+  }
+
+  /**
+   * @test
+   */
   public function removesKeys() {
 
     $content = <<<FILE
