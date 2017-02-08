@@ -1,0 +1,25 @@
+language: php
+
+php:
+  - 5.6
+  - 7
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_install:
+  - composer self-update
+
+before_script:
+  - composer install
+
+script:
+  - bin/parallel-lint --exclude bin --exclude vendor .
+  - bin/phpunit
+
+notifications:
+  slack:
+    secure: FHPbVXHOrXsk80e0+WLID8v5m9S59/qoQyM5XK2hytFUaT+oSh0iY+Ajdnajpl+6qd6iQNbREfd04A2TTBxh7+LzHgOqxhHoZSYTgTHgsOPQPgUCxPJpWInwQGxgp+23pE0l+oX8u0lWkYk9NIf+WtrF6niLvT0KLOJiuB8ojms=
