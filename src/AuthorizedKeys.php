@@ -165,6 +165,7 @@ class AuthorizedKeys implements \IteratorAggregate {
    *
    * @param string $content content of the authorized_keys file
    * @return array
+   * @throws InvalidKeyException if an invalid key is encountered
    */
   protected function parse($content) {
 

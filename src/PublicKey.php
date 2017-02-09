@@ -155,6 +155,7 @@ class PublicKey {
    *
    * @param string $key public key string
    * @return array
+   * @throws InvalidKeyException if the key is invalid
    */
   protected function parse($key) {
 
