@@ -1,6 +1,11 @@
 {
   "name": "pagemachine/authorized-keys",
   "description": "Read, edit and write the SSH authorized_keys file",
+  "keywords": [
+    "ssh",
+    "authorized_keys",
+    "public-key"
+  ],
   "license": "GPL-3.0+",
   "authors": [
     {
