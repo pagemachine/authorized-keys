@@ -1,9 +1,6 @@
 <?php
 namespace pagemachine\AuthorizedKeys;
 
-use pagemachine\AuthorizedKeys\Exception\FilePermissionException;
-use pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
-
 /*
  * This file is part of the pagemachine Authorized Keys project.
  *
@@ -14,6 +11,9 @@ use pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+use pagemachine\AuthorizedKeys\Exception\FilePermissionException;
+use pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 
 /**
  * Manages the authorized_keys file
