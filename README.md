@@ -1,6 +1,6 @@
 # Authorized Keys
 
-[![Build Status](https://img.shields.io/travis/pagemachine/authorized-keys/master.svg?style=flat-square)](https://travis-ci.org/pagemachine/authorized-keys)
+[![Build Status](https://img.shields.io/travis/pagemachine/authorized-keys/master.svg?style=flat-square)](https://travis-ci.org/pagemachine/authorized-keys) [![StyleCI Status](https://styleci.io/repos/81341762/shield)](https://styleci.io/repos/81341762)
 
 Read, edit and write the SSH `authorized_keys` file.
 
