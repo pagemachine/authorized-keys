@@ -35,7 +35,7 @@ $authorizedKeys->addKey($key);
 
 Notice that each key is only added once, if you add it again, only its options, type and comment are updated accordingly. Thus it's safe to call this method in any case to ensure keys are present.
 
-To remove a key wrap it in `PublicKey` to make it identifiable and remove it from the file:
+To remove a key, wrap it in `PublicKey` and remove it from the file:
 
 ```php
 $key = new PublicKey('ssh-rsa AAA...');
