@@ -1,5 +1,5 @@
 <?php
-namespace pagemachine\AuthorizedKeys;
+namespace Pagemachine\AuthorizedKeys;
 
 /*
  * This file is part of the pagemachine Authorized Keys project.
@@ -12,7 +12,7 @@ namespace pagemachine\AuthorizedKeys;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
+use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 
 /**
  * Represents a public key

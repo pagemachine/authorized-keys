@@ -24,12 +24,12 @@
   },
   "autoload": {
     "psr-4": {
-      "pagemachine\\AuthorizedKeys\\": "src"
+      "Pagemachine\\AuthorizedKeys\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "pagemachine\\AuthorizedKeys\\Test\\": "test"
+      "Pagemachine\\AuthorizedKeys\\Test\\": "test"
     }
   },
   "config": {

@@ -1,5 +1,5 @@
 <?php
-namespace pagemachine\AuthorizedKeys\Exception;
+namespace Pagemachine\AuthorizedKeys\Exception;
 
 /*
  * This file is part of the pagemachine Authorized Keys project.

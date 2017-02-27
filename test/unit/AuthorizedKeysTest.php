@@ -1,5 +1,5 @@
 <?php
-namespace pagemachine\AuthorizedKeys\Test;
+namespace Pagemachine\AuthorizedKeys\Test;
 
 /*
  * This file is part of the pagemachine Authorized Keys project.
@@ -14,10 +14,10 @@ namespace pagemachine\AuthorizedKeys\Test;
 
 use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStream;
-use pagemachine\AuthorizedKeys\AuthorizedKeys;
-use pagemachine\AuthorizedKeys\Exception\FilePermissionException;
-use pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
-use pagemachine\AuthorizedKeys\PublicKey;
+use Pagemachine\AuthorizedKeys\AuthorizedKeys;
+use Pagemachine\AuthorizedKeys\Exception\FilePermissionException;
+use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
+use Pagemachine\AuthorizedKeys\PublicKey;
 
 /**
  * Testcase for pagemachine\AuthorizedKeys\AuthorizedKeys

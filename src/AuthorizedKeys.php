@@ -1,5 +1,5 @@
 <?php
-namespace pagemachine\AuthorizedKeys;
+namespace Pagemachine\AuthorizedKeys;
 
 /*
  * This file is part of the pagemachine Authorized Keys project.
@@ -12,8 +12,8 @@ namespace pagemachine\AuthorizedKeys;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use pagemachine\AuthorizedKeys\Exception\FilePermissionException;
-use pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
+use Pagemachine\AuthorizedKeys\Exception\FilePermissionException;
+use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 
 /**
  * Manages the authorized_keys file

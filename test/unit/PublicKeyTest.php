@@ -1,5 +1,5 @@
 <?php
-namespace pagemachine\AuthorizedKeys\Test;
+namespace Pagemachine\AuthorizedKeys\Test;
 
 /*
  * This file is part of the pagemachine Authorized Keys project.
@@ -13,8 +13,8 @@ namespace pagemachine\AuthorizedKeys\Test;
  */
 
 use PHPUnit\Framework\TestCase;
-use pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
-use pagemachine\AuthorizedKeys\PublicKey;
+use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
+use Pagemachine\AuthorizedKeys\PublicKey;
 
 /**
  * Testcase for pagemachine\AuthorizedKeys\PublicKey

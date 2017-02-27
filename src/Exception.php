@@ -1,5 +1,5 @@
 <?php
-namespace pagemachine\AuthorizedKeys;
+namespace Pagemachine\AuthorizedKeys;
 
 /*
  * This file is part of the pagemachine Authorized Keys project.
