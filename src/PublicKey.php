@@ -17,181 +17,175 @@ use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 /**
  * Represents a public key
  */
-class PublicKey {
+class PublicKey
+{
+    /**
+     * @var string $options
+     */
+    protected $options;
 
-  /**
-   * @var string $options
-   */
-  protected $options;
+    /**
+     * @var string $type
+     */
+    protected $type;
 
-  /**
-   * @var string $type
-   */
-  protected $type;
+    /**
+     * @var string $key
+     */
+    protected $key;
 
-  /**
-   * @var string $key
-   */
-  protected $key;
+    /**
+     * @var string $comment
+     */
+    protected $comment;
 
-  /**
-   * @var string $comment
-   */
-  protected $comment;
+    /**
+     * @param string $key public key string
+     */
+    public function __construct($key)
+    {
+        $parts = $this->parse($key);
 
-  /**
-   * @param string $key public key string
-   */
-  public function __construct($key) {
+        foreach (['options', 'type', 'key', 'comment'] as $part) {
+            if (isset($parts[$part])) {
+                $setter = 'set' . ucfirst($part);
 
-    $parts = $this->parse($key);
-
-    foreach (['options', 'type', 'key', 'comment'] as $part) {
-
-      if (isset($parts[$part])) {
-
-        $setter = 'set' . ucfirst($part);
-
-        $this->$setter($parts[$part]);
-      }
-    }
-  }
-
-  /**
-   * @return string
-   */
-  public function getOptions() {
-
-    return $this->options;
-  }
-
-  /**
-   * @param string $options
-   * @return void
-   */
-  public function setOptions($options) {
-
-    $this->options = $options;
-  }
-
-  /**
-   * @return string
-   */
-  public function getType() {
-
-    return $this->type;
-  }
-
-  /**
-   * @param string $type
-   * @return void
-   */
-  public function setType($type) {
-
-    $this->type = $type;
-  }
-
-  /**
-   * @return string
-   */
-  public function getKey() {
-
-    return $this->key;
-  }
-
-  /**
-   * @param string $key
-   * @return void
-   */
-  public function setKey($key) {
-
-    $this->key = $key;
-  }
-
-  /**
-   * @return string
-   */
-  public function getComment() {
-
-    return $this->comment;
-  }
-
-  /**
-   * @param string $comment
-   * @return void
-   */
-  public function setComment($comment) {
-
-    $this->comment = $comment;
-  }
-
-  /**
-   * Returns the file content as string
-   *
-   * @return string
-   */
-  public function __toString() {
-
-    $parts = [];
-
-    if (!empty($this->options)) {
-
-      $parts[] = $this->options;
+                $this->$setter($parts[$part]);
+            }
+        }
     }
 
-    $parts[] = $this->type;
-    $parts[] = $this->key;
-
-    if (!empty($this->comment)) {
-
-      $parts[] = $this->comment;
+    /**
+     * @return string
+     */
+    public function getOptions()
+    {
+        return $this->options;
     }
 
-    return implode(' ', $parts);
-  }
-
-  /**
-   * Parses a publie key string
-   *
-   * @param string $key public key string
-   * @return array
-   * @throws InvalidKeyException if the key is invalid
-   */
-  protected function parse($key) {
-
-    static $pattern = '/
-      (?<options>[^\s]+\s+)?
-      (?<type>
-        ecdsa-sha2-nistp256
-        |
-        ecdsa-sha2-nistp384
-        |
-        ecdsa-sha2-nistp521
-        |
-        ssh-dss
-        |
-        ssh-ed25519
-        |
-        ssh-rsa
-      )
-      (?<key>\s+[^\s]+)?
-      (?<comment>\s+.+)?
-    /x';
-    $parts = [];
-
-    preg_match($pattern, $key, $parts);
-    $parts = array_map('trim', $parts);
-
-    if (empty($parts['type'])) {
-
-      throw new InvalidKeyException('Invalid key type', 1486561051);
+    /**
+     * @param string $options
+     * @return void
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
     }
 
-    if (empty($parts['key'])) {
-
-      throw new InvalidKeyException('Empty key content', 1486561621);
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
-    return $parts;
-  }
+    /**
+     * @param string $type
+     * @return void
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param string $key
+     * @return void
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
+
+    /**
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param string $comment
+     * @return void
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+    }
+
+    /**
+     * Returns the file content as string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $parts = [];
+
+        if (!empty($this->options)) {
+            $parts[] = $this->options;
+        }
+
+        $parts[] = $this->type;
+        $parts[] = $this->key;
+
+        if (!empty($this->comment)) {
+            $parts[] = $this->comment;
+        }
+
+        return implode(' ', $parts);
+    }
+
+    /**
+     * Parses a publie key string
+     *
+     * @param string $key public key string
+     * @return array
+     * @throws InvalidKeyException if the key is invalid
+     */
+    protected function parse($key)
+    {
+        static $pattern = '/
+        (?<options>[^\s]+\s+)?
+        (?<type>
+          ecdsa-sha2-nistp256
+          |
+          ecdsa-sha2-nistp384
+          |
+          ecdsa-sha2-nistp521
+          |
+          ssh-dss
+          |
+          ssh-ed25519
+          |
+          ssh-rsa
+        )
+        (?<key>\s+[^\s]+)?
+        (?<comment>\s+.+)?
+      /x';
+        $parts = [];
+
+        preg_match($pattern, $key, $parts);
+        $parts = array_map('trim', $parts);
+
+        if (empty($parts['type'])) {
+            throw new InvalidKeyException('Invalid key type', 1486561051);
+        }
+
+        if (empty($parts['key'])) {
+            throw new InvalidKeyException('Empty key content', 1486561621);
+        }
+
+        return $parts;
+    }
 }

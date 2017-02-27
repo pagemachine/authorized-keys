@@ -15,6 +15,6 @@ namespace Pagemachine\AuthorizedKeys\Exception;
 /**
  * File permission exception
  */
-class FilePermissionException extends \RuntimeException {
-
+class FilePermissionException extends \RuntimeException
+{
 }

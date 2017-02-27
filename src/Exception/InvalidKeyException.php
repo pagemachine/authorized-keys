@@ -15,6 +15,6 @@ namespace Pagemachine\AuthorizedKeys\Exception;
 /**
  * Invalid key exception
  */
-class InvalidKeyException extends \RuntimeException {
-
+class InvalidKeyException extends \RuntimeException
+{
 }

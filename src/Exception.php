@@ -15,6 +15,6 @@ namespace Pagemachine\AuthorizedKeys;
 /**
  * Generic Exception
  */
-class Exception extends \RuntimeException {
-
+class Exception extends \RuntimeException
+{
 }

@@ -18,178 +18,166 @@ use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 /**
  * Manages the authorized_keys file
  */
-class AuthorizedKeys implements \IteratorAggregate {
+class AuthorizedKeys implements \IteratorAggregate
+{
+    /**
+     * Lines of the file
+     *
+     * @var array
+     */
+    protected $lines = [];
 
-  /**
-   * Lines of the file
-   *
-   * @var array
-   */
-  protected $lines = [];
+    /**
+     * Map of keys to file lines
+     *
+     * @var array
+     */
+    protected $keyLines = [];
 
-  /**
-   * Map of keys to file lines
-   *
-   * @var array
-   */
-  protected $keyLines = [];
-
-  /**
-   * @param string $content content of the authorized_keys file
-   */
-  public function __construct($content = null) {
-
-    if (!empty($content)) {
-
-      $this->lines = $this->parse($content);
-    }
-  }
-
-  /**
-   * Creates a new instance from a file
-   *
-   * @param string $file path of authorized_keys file
-   * @return AuthorizedKeys
-   * @throws FilePermissionException if the authorized_keys file cannot be read
-   */
-  public static function fromFile($file) {
-
-    $content = @file_get_contents($file);
-
-    if ($content === false) {
-
-      throw new FilePermissionException(sprintf('Could not read file "%s"', $file), 1486563469);
+    /**
+     * @param string $content content of the authorized_keys file
+     */
+    public function __construct($content = null)
+    {
+        if (!empty($content)) {
+            $this->lines = $this->parse($content);
+        }
     }
 
-    return new static($content);
-  }
+    /**
+     * Creates a new instance from a file
+     *
+     * @param string $file path of authorized_keys file
+     * @return AuthorizedKeys
+     * @throws FilePermissionException if the authorized_keys file cannot be read
+     */
+    public static function fromFile($file)
+    {
+        $content = @file_get_contents($file);
 
-  /**
-   * Writes all content to the filesystem
-   *
-   * Also ensure that the written file has the recommended permissions,
-   * namely only readable and writable to the current user
-   *
-   * @param string $file path of the authorized_keys file
-   * @throws FilePermissionException if the authorized_keys file cannot be written or permissions cannot be set
-   */
-  public function toFile($file) {
-
-    $result = @file_put_contents($file, (string) $this);
-
-    if ($result === false) {
-
-      throw new FilePermissionException(sprintf('Could not write file "%s"', $file), 1486563789);
-    }
-
-    $result = @chmod($file, 0600);
-
-    if ($result === false) {
-
-      throw new FilePermissionException(sprintf('Could not change permissions of file "%s"', $file), 1486563909);
-    }
-  }
-
-  /**
-   * Return all public keys in the file
-   *
-   * @return PublicKey[]
-   */
-  public function getKeys() {
-
-    $keys = [];
-
-    foreach ($this->keyLines as $line) {
-
-      $keys[] = $this->lines[$line];
-    }
-
-    return $keys;
-  }
-
-  /**
-   * Add a public key to the file
-   *
-   * @param PublicKey $key a public key
-   */
-  public function addKey(PublicKey $key) {
-
-    $index = $key->getKey();
-
-    if (!isset($this->keyLines[$index])) {
-
-      $this->keyLines[$index] = count($this->lines);
-    }
-
-    $this->lines[$this->keyLines[$index]] = $key;
-  }
-
-  /**
-   * Remove a public key from the file
-   *
-   * @param PublicKey $key a public key
-   */
-  public function removeKey(PublicKey $key) {
-
-    $index = $key->getKey();
-
-    if (isset($this->keyLines[$index])) {
-
-      unset($this->lines[$this->keyLines[$index]], $this->keyLines[$index]);
-    }
-  }
-
-  /**
-   * Returns the file content as string
-   *
-   * @return string
-   */
-  public function __toString() {
-
-    return implode("\n", $this->lines);
-  }
-
-  /**
-   * @return \Traversable
-   */
-  public function getIterator() {
-
-    foreach ($this->getKeys() as $key) {
-
-      yield $key;
-    }
-  }
-
-  /**
-   * Parses content of a authorized_keys file
-   *
-   * @param string $content content of the authorized_keys file
-   * @return array
-   * @throws InvalidKeyException if an invalid key is encountered
-   */
-  protected function parse($content) {
-
-    $lines = explode("\n", $content);
-    $lines = array_map('trim', $lines);
-
-    foreach ($lines as $i => $line) {
-
-      if (!empty($line) && $line[0] !== '#') {
-
-        try {
-
-          $publicKey = new PublicKey($line);
-        } catch (InvalidKeyException $e) {
-
-          throw new InvalidKeyException(sprintf('Invalid key at line %d: %s', $i + 1, $e->getMessage()), 1486561427);
+        if ($content === false) {
+            throw new FilePermissionException(sprintf('Could not read file "%s"', $file), 1486563469);
         }
 
-        $lines[$i] = $publicKey;
-
-        $this->keyLines[$publicKey->getKey()] = $i;
-      }
+        return new static($content);
     }
 
-    return $lines;
-  }
+    /**
+     * Writes all content to the filesystem
+     *
+     * Also ensure that the written file has the recommended permissions,
+     * namely only readable and writable to the current user
+     *
+     * @param string $file path of the authorized_keys file
+     * @throws FilePermissionException if the authorized_keys file cannot be written or permissions cannot be set
+     */
+    public function toFile($file)
+    {
+        $result = @file_put_contents($file, (string) $this);
+
+        if ($result === false) {
+            throw new FilePermissionException(sprintf('Could not write file "%s"', $file), 1486563789);
+        }
+
+        $result = @chmod($file, 0600);
+
+        if ($result === false) {
+            throw new FilePermissionException(sprintf('Could not change permissions of file "%s"', $file), 1486563909);
+        }
+    }
+
+    /**
+     * Return all public keys in the file
+     *
+     * @return PublicKey[]
+     */
+    public function getKeys()
+    {
+        $keys = [];
+
+        foreach ($this->keyLines as $line) {
+            $keys[] = $this->lines[$line];
+        }
+
+        return $keys;
+    }
+
+    /**
+     * Add a public key to the file
+     *
+     * @param PublicKey $key a public key
+     */
+    public function addKey(PublicKey $key)
+    {
+        $index = $key->getKey();
+
+        if (!isset($this->keyLines[$index])) {
+            $this->keyLines[$index] = count($this->lines);
+        }
+
+        $this->lines[$this->keyLines[$index]] = $key;
+    }
+
+    /**
+     * Remove a public key from the file
+     *
+     * @param PublicKey $key a public key
+     */
+    public function removeKey(PublicKey $key)
+    {
+        $index = $key->getKey();
+
+        if (isset($this->keyLines[$index])) {
+            unset($this->lines[$this->keyLines[$index]], $this->keyLines[$index]);
+        }
+    }
+
+    /**
+     * Returns the file content as string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return implode("\n", $this->lines);
+    }
+
+    /**
+     * @return \Traversable
+     */
+    public function getIterator()
+    {
+        foreach ($this->getKeys() as $key) {
+            yield $key;
+        }
+    }
+
+    /**
+     * Parses content of a authorized_keys file
+     *
+     * @param string $content content of the authorized_keys file
+     * @return array
+     * @throws InvalidKeyException if an invalid key is encountered
+     */
+    protected function parse($content)
+    {
+        $lines = explode("\n", $content);
+        $lines = array_map('trim', $lines);
+
+        foreach ($lines as $i => $line) {
+            if (!empty($line) && $line[0] !== '#') {
+                try {
+                    $publicKey = new PublicKey($line);
+                } catch (InvalidKeyException $e) {
+                    throw new InvalidKeyException(sprintf('Invalid key at line %d: %s', $i + 1, $e->getMessage()), 1486561427);
+                }
+
+                $lines[$i] = $publicKey;
+
+                $this->keyLines[$publicKey->getKey()] = $i;
+            }
+        }
+
+        return $lines;
+    }
 }

@@ -19,96 +19,96 @@ use Pagemachine\AuthorizedKeys\PublicKey;
 /**
  * Testcase for pagemachine\AuthorizedKeys\PublicKey
  */
-class PublicKeyTest extends TestCase {
+class PublicKeyTest extends TestCase
+{
+    /**
+     * @test
+     * @dataProvider keys
+     *
+     * @param string $key
+     */
+    public function constructsFromString($key)
+    {
+        $publicKey = new PublicKey($key);
 
-  /**
-   * @test
-   * @dataProvider keys
-   *
-   * @param string $key
-   */
-  public function constructsFromString($key) {
+        $this->assertEquals($key, (string) $publicKey);
+    }
 
-    $publicKey = new PublicKey($key);
+    /**
+     * @return array
+     */
+    public function keys()
+    {
+        return [
+        'minimum' => ['ssh-rsa AAA'],
+        'with comment' => ['ssh-rsa AAA test'],
+        'with options' => ['command="/bin/test" ssh-rsa AAA'],
+        'with options and comment' => ['command="/bin/test" ssh-rsa AAA test'],
+      ];
+    }
 
-    $this->assertEquals($key, (string) $publicKey);
-  }
-
-  /**
-   * @return array
-   */
-  public function keys() {
-
-    return [
-      'minimum' => ['ssh-rsa AAA'],
-      'with comment' => ['ssh-rsa AAA test'],
-      'with options' => ['command="/bin/test" ssh-rsa AAA'],
-      'with options and comment' => ['command="/bin/test" ssh-rsa AAA test'],
-    ];
-  }
-
-  /**
-   * @test
-   */
-  public function parsesKeyParts() {
-
-    $key = <<<FILE
+    /**
+     * @test
+     */
+    public function parsesKeyParts()
+    {
+        $key = <<<FILE
 command="/bin/test" ssh-rsa AAA test
 FILE;
 
-    $publicKey = new PublicKey($key);
+        $publicKey = new PublicKey($key);
 
-    $this->assertEquals('command="/bin/test"', $publicKey->getOptions());
-    $this->assertEquals('ssh-rsa', $publicKey->getType());
-    $this->assertEquals('AAA', $publicKey->getKey());
-    $this->assertEquals('test', $publicKey->getComment());
-  }
+        $this->assertEquals('command="/bin/test"', $publicKey->getOptions());
+        $this->assertEquals('ssh-rsa', $publicKey->getType());
+        $this->assertEquals('AAA', $publicKey->getKey());
+        $this->assertEquals('test', $publicKey->getComment());
+    }
 
-  /**
-   * @test
-   */
-  public function setsKeyParts() {
-
-    $key = <<<FILE
+    /**
+     * @test
+     */
+    public function setsKeyParts()
+    {
+        $key = <<<FILE
 command="/bin/test" ssh-rsa AAA test
 FILE;
 
-    $publicKey = new PublicKey($key);
+        $publicKey = new PublicKey($key);
 
-    $publicKey->setOptions('agent-forwarding');
-    $this->assertEquals('agent-forwarding', $publicKey->getOptions());
+        $publicKey->setOptions('agent-forwarding');
+        $this->assertEquals('agent-forwarding', $publicKey->getOptions());
 
-    $publicKey->setType('ssh-dss');
-    $this->assertEquals('ssh-dss', $publicKey->getType());
+        $publicKey->setType('ssh-dss');
+        $this->assertEquals('ssh-dss', $publicKey->getType());
 
-    $publicKey->setKey('BBB');
-    $this->assertEquals('BBB', $publicKey->getKey());
+        $publicKey->setKey('BBB');
+        $this->assertEquals('BBB', $publicKey->getKey());
 
-    $publicKey->setComment('foo');
-    $this->assertEquals('foo', $publicKey->getComment());
+        $publicKey->setComment('foo');
+        $this->assertEquals('foo', $publicKey->getComment());
 
-    $this->assertEquals('agent-forwarding ssh-dss BBB foo', (string) $publicKey);
-  }
+        $this->assertEquals('agent-forwarding ssh-dss BBB foo', (string) $publicKey);
+    }
 
-  /**
-   * @test
-   */
-  public function throwsExceptionOnInvalidType() {
+    /**
+     * @test
+     */
+    public function throwsExceptionOnInvalidType()
+    {
+        $this->expectException(InvalidKeyException::class);
+        $this->expectExceptionCode(1486561051);
 
-    $this->expectException(InvalidKeyException::class);
-    $this->expectExceptionCode(1486561051);
+        new PublicKey('foo AAA');
+    }
 
-    new PublicKey('foo AAA');
-  }
+    /**
+     * @test
+     */
+    public function throwsExceptionOnEmptyKey()
+    {
+        $this->expectException(InvalidKeyException::class);
+        $this->expectExceptionCode(1486561621);
 
-  /**
-   * @test
-   */
-  public function throwsExceptionOnEmptyKey() {
-
-    $this->expectException(InvalidKeyException::class);
-    $this->expectExceptionCode(1486561621);
-
-    new PublicKey('ssh-rsa');
-  }
+        new PublicKey('ssh-rsa');
+    }
 }
