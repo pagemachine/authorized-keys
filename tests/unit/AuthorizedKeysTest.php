@@ -229,6 +229,25 @@ FILE;
     /**
      * @test
      */
+    public function addsKeysAvoidsMissingTrailingNewline()
+    {
+        $authorizedKeys = new AuthorizedKeys('ssh-rsa AAA first');
+
+        $publicKey = new PublicKey('ssh-rsa BBB second');
+
+        $authorizedKeys->addKey($publicKey);
+
+        $expected = <<<FILE
+ssh-rsa AAA first
+ssh-rsa BBB second
+FILE;
+
+        $this->assertEquals($expected, (string) $authorizedKeys);
+    }
+
+    /**
+     * @test
+     */
     public function removesKeys()
     {
         $content = <<<FILE
