@@ -13,7 +13,6 @@ Read, edit and write the SSH `authorized_keys` file.
 To access the `authorized_keys` file an instance of `AuthorizedKeys` must be created, either directly passing the file content to the constructor or using the static `fromFile()` method:
 
 ```php
-
 $path = '/home/foo/.ssh/authorized_keys';
 $authorizedKeys = AuthorizedKeys::fromFile($path);
 ```
