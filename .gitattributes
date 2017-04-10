@@ -3,5 +3,6 @@
 .gitignore export-ignore
 .styleci.yml
 .travis.yml
+composer.lock
 phpunit.xml
 tests export-ignore
