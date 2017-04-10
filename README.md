@@ -14,7 +14,7 @@ To access the `authorized_keys` file an instance of `AuthorizedKeys` must be cre
 
 ```php
 
-$path = '/home/foo/.ssh/authorized_keys'
+$path = '/home/foo/.ssh/authorized_keys';
 $authorizedKeys = AuthorizedKeys::fromFile($path);
 ```
 
