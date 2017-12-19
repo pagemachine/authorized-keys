@@ -14,6 +14,7 @@ namespace Pagemachine\AuthorizedKeys;
 
 use Pagemachine\AuthorizedKeys\Exception\FilePermissionException;
 use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
+use Pagemachine\AuthorizedKeys\InvalidPublicKey;
 
 /**
  * Manages the authorized_keys file
@@ -157,7 +158,6 @@ class AuthorizedKeys implements \IteratorAggregate
      *
      * @param string $content content of the authorized_keys file
      * @return array
-     * @throws InvalidKeyException if an invalid key is encountered
      */
     protected function parse($content)
     {
@@ -169,7 +169,8 @@ class AuthorizedKeys implements \IteratorAggregate
                 try {
                     $publicKey = new PublicKey($line);
                 } catch (InvalidKeyException $e) {
-                    throw new InvalidKeyException(sprintf('Invalid key at line %d: %s', $i + 1, $e->getMessage()), 1486561427);
+                    $publicKey = new InvalidPublicKey($line);
+                    $publicKey->setError($e);
                 }
 
                 $lines[$i] = $publicKey;

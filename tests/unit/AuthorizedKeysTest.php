@@ -13,11 +13,12 @@ namespace Pagemachine\AuthorizedKeys\Test;
  */
 
 use PHPUnit\Framework\TestCase;
-use org\bovigo\vfs\vfsStream;
 use Pagemachine\AuthorizedKeys\AuthorizedKeys;
 use Pagemachine\AuthorizedKeys\Exception\FilePermissionException;
 use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
+use Pagemachine\AuthorizedKeys\InvalidPublicKey;
 use Pagemachine\AuthorizedKeys\PublicKey;
+use org\bovigo\vfs\vfsStream;
 
 /**
  * Testcase for pagemachine\AuthorizedKeys\AuthorizedKeys
@@ -295,16 +296,24 @@ FILE;
     /**
      * @test
      */
-    public function throwsExceptionOnInvalidKeys()
+    public function handlesInvalidKeys()
     {
         $content = <<<FILE
 ssh-rsa AAA first
 foo BBB second
 FILE;
 
-        $this->expectException(InvalidKeyException::class);
-        $this->expectExceptionMessageRegExp('/Invalid key at line 2: .+/');
+        $authorizedKeys = new AuthorizedKeys($content);
+        $keys = $authorizedKeys->getKeys();
 
-        new AuthorizedKeys($content);
+        $this->assertCount(2, $keys);
+        $this->assertContainsOnlyInstancesOf(PublicKey::class, $keys);
+
+        $invalidKey = $keys[1];
+
+        $this->assertInstanceOf(InvalidPublicKey::class, $invalidKey);
+        $this->assertInstanceOf(InvalidKeyException::class, $invalidKey->getError());
+
+        $this->assertEquals($content, (string) $authorizedKeys);
     }
 }
