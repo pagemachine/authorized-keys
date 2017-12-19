@@ -38,7 +38,7 @@
   },
   "scripts": {
     "lint:php": "parallel-lint --exclude bin --exclude vendor .",
-    "test:unit": "phpunit",
+    "test:unit": "phpunit --colors=always",
     "build": [
       "@lint:php",
       "@test:unit"
