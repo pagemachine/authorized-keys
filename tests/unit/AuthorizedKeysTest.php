@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Pagemachine\AuthorizedKeys\Test;
 
 /*
@@ -12,13 +13,13 @@ namespace Pagemachine\AuthorizedKeys\Test;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use PHPUnit\Framework\TestCase;
+use org\bovigo\vfs\vfsStream;
 use Pagemachine\AuthorizedKeys\AuthorizedKeys;
 use Pagemachine\AuthorizedKeys\Exception\FilePermissionException;
 use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 use Pagemachine\AuthorizedKeys\InvalidPublicKey;
 use Pagemachine\AuthorizedKeys\PublicKey;
-use org\bovigo\vfs\vfsStream;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Testcase for pagemachine\AuthorizedKeys\AuthorizedKeys

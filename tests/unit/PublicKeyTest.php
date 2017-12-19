@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Pagemachine\AuthorizedKeys\Test;
 
 /*
@@ -12,9 +13,9 @@ namespace Pagemachine\AuthorizedKeys\Test;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use PHPUnit\Framework\TestCase;
 use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 use Pagemachine\AuthorizedKeys\PublicKey;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Testcase for pagemachine\AuthorizedKeys\PublicKey
@@ -40,11 +41,11 @@ class PublicKeyTest extends TestCase
     public function keys(): array
     {
         return [
-        'minimum' => ['ssh-rsa AAA'],
-        'with comment' => ['ssh-rsa AAA test'],
-        'with options' => ['command="/bin/test" ssh-rsa AAA'],
-        'with options and comment' => ['command="/bin/test" ssh-rsa AAA test'],
-      ];
+            'minimum' => ['ssh-rsa AAA'],
+            'with comment' => ['ssh-rsa AAA test'],
+            'with options' => ['command="/bin/test" ssh-rsa AAA'],
+            'with options and comment' => ['command="/bin/test" ssh-rsa AAA test'],
+        ];
     }
 
     /**
