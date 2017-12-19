@@ -22,27 +22,27 @@ class PublicKey
     /**
      * @var string $options
      */
-    protected $options;
+    protected $options = '';
 
     /**
      * @var string $type
      */
-    protected $type;
+    protected $type = '';
 
     /**
      * @var string $key
      */
-    protected $key;
+    protected $key = '';
 
     /**
      * @var string $comment
      */
-    protected $comment;
+    protected $comment = '';
 
     /**
      * @param string $key public key string
      */
-    public function __construct($key)
+    public function __construct(string $key)
     {
         $parts = $this->parse($key);
 
@@ -58,7 +58,7 @@ class PublicKey
     /**
      * @return string
      */
-    public function getOptions()
+    public function getOptions(): string
     {
         return $this->options;
     }
@@ -67,7 +67,7 @@ class PublicKey
      * @param string $options
      * @return void
      */
-    public function setOptions($options)
+    public function setOptions(string $options)
     {
         $this->options = $options;
     }
@@ -75,7 +75,7 @@ class PublicKey
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -84,7 +84,7 @@ class PublicKey
      * @param string $type
      * @return void
      */
-    public function setType($type)
+    public function setType(string $type)
     {
         $this->type = $type;
     }
@@ -92,7 +92,7 @@ class PublicKey
     /**
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -101,7 +101,7 @@ class PublicKey
      * @param string $key
      * @return void
      */
-    public function setKey($key)
+    public function setKey(string $key)
     {
         $this->key = $key;
     }
@@ -109,7 +109,7 @@ class PublicKey
     /**
      * @return string
      */
-    public function getComment()
+    public function getComment(): string
     {
         return $this->comment;
     }
@@ -118,7 +118,7 @@ class PublicKey
      * @param string $comment
      * @return void
      */
-    public function setComment($comment)
+    public function setComment(string $comment)
     {
         $this->comment = $comment;
     }
@@ -128,7 +128,7 @@ class PublicKey
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $parts = [];
 
@@ -153,26 +153,26 @@ class PublicKey
      * @return array
      * @throws InvalidKeyException if the key is invalid
      */
-    protected function parse($key)
+    protected function parse(string $key): array
     {
         static $pattern = '/
-        (?<options>[^\s]+\s+)?
-        (?<type>
-          ecdsa-sha2-nistp256
-          |
-          ecdsa-sha2-nistp384
-          |
-          ecdsa-sha2-nistp521
-          |
-          ssh-dss
-          |
-          ssh-ed25519
-          |
-          ssh-rsa
-        )
-        (?<key>\s+[^\s]+)?
-        (?<comment>\s+.+)?
-      /x';
+          (?<options>[^\s]+\s+)?
+          (?<type>
+            ecdsa-sha2-nistp256
+            |
+            ecdsa-sha2-nistp384
+            |
+            ecdsa-sha2-nistp521
+            |
+            ssh-dss
+            |
+            ssh-ed25519
+            |
+            ssh-rsa
+          )
+          (?<key>\s+[^\s]+)?
+          (?<comment>\s+.+)?
+        /x';
         $parts = [];
 
         preg_match($pattern, $key, $parts);

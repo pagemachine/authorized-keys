@@ -38,7 +38,7 @@ class AuthorizedKeys implements \IteratorAggregate
     /**
      * @param string $content content of the authorized_keys file
      */
-    public function __construct($content = null)
+    public function __construct(string $content = null)
     {
         if (!empty($content)) {
             $this->lines = $this->parse($content);
@@ -52,7 +52,7 @@ class AuthorizedKeys implements \IteratorAggregate
      * @return AuthorizedKeys
      * @throws FilePermissionException if the authorized_keys file cannot be read
      */
-    public static function fromFile($file)
+    public static function fromFile(string $file): AuthorizedKeys
     {
         $content = @file_get_contents($file);
 
@@ -72,7 +72,7 @@ class AuthorizedKeys implements \IteratorAggregate
      * @param string $file path of the authorized_keys file
      * @throws FilePermissionException if the authorized_keys file cannot be written or permissions cannot be set
      */
-    public function toFile($file)
+    public function toFile(string $file)
     {
         $result = @file_put_contents($file, (string) $this);
 
@@ -92,7 +92,7 @@ class AuthorizedKeys implements \IteratorAggregate
      *
      * @return PublicKey[]
      */
-    public function getKeys()
+    public function getKeys(): array
     {
         $keys = [];
 
@@ -138,7 +138,7 @@ class AuthorizedKeys implements \IteratorAggregate
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return implode("\n", $this->lines);
     }
@@ -146,7 +146,7 @@ class AuthorizedKeys implements \IteratorAggregate
     /**
      * @return \Traversable
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         foreach ($this->getKeys() as $key) {
             yield $key;
@@ -159,7 +159,7 @@ class AuthorizedKeys implements \IteratorAggregate
      * @param string $content content of the authorized_keys file
      * @return array
      */
-    protected function parse($content)
+    protected function parse(string $content): array
     {
         $lines = explode("\n", $content);
         $lines = array_map('trim', $lines);
@@ -169,8 +169,7 @@ class AuthorizedKeys implements \IteratorAggregate
                 try {
                     $publicKey = new PublicKey($line);
                 } catch (InvalidKeyException $e) {
-                    $publicKey = new InvalidPublicKey($line);
-                    $publicKey->setError($e);
+                    $publicKey = new InvalidPublicKey($line, $e);
                 }
 
                 $lines[$i] = $publicKey;

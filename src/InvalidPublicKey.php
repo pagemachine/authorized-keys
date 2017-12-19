@@ -14,12 +14,15 @@ use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+/**
+ * An invalid public key
+ */
 class InvalidPublicKey extends PublicKey
 {
     /**
      * @var string
      */
-    protected $rawKey;
+    protected $rawKey = '';
 
     /**
      * @var InvalidKeyException
@@ -28,26 +31,18 @@ class InvalidPublicKey extends PublicKey
 
     /**
      * @param string $key public key string
+     * @param InvalidKeyException $error error with the key string
      */
-    public function __construct($key)
+    public function __construct(string $key, InvalidKeyException $error)
     {
         $this->rawKey = $key;
+        $this->error = $error;
     }
 
     /**
      * @return string
      */
-    public function getKey()
-    {
-        return $this->rawKey;
-    }
-
-    /**
-     * Returns the file content as string
-     *
-     * @return string
-     */
-    public function __toString()
+    public function getKey(): string
     {
         return $this->rawKey;
     }
@@ -55,17 +50,18 @@ class InvalidPublicKey extends PublicKey
     /**
      * @return InvalidKeyException
      */
-    public function getError()
+    public function getError(): InvalidKeyException
     {
         return $this->error;
     }
 
     /**
-     * @param InvalidKeyException $error
-     * @return void
+     * Returns the file content as string
+     *
+     * @return string
      */
-    public function setError(InvalidKeyException $error)
+    public function __toString(): string
     {
-        $this->error = $error;
+        return $this->rawKey;
     }
 }
