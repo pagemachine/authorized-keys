@@ -13,9 +13,11 @@ namespace Pagemachine\AuthorizedKeys\Exception;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Pagemachine\AuthorizedKeys\Exception;
+
 /**
  * File permission exception
  */
-class FilePermissionException extends \RuntimeException
+class FilePermissionException extends Exception
 {
 }
