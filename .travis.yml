@@ -12,15 +12,11 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-before_install:
-  - composer self-update
-
 before_script:
   - composer install
 
 script:
-  - bin/parallel-lint --exclude bin --exclude vendor .
-  - bin/phpunit
+  - composer build
 
 notifications:
   slack:

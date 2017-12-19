@@ -35,5 +35,13 @@
   "config": {
     "bin-dir": "bin",
     "sort-packages": true
+  },
+  "scripts": {
+    "lint:php": "parallel-lint --exclude bin --exclude vendor .",
+    "test:unit": "phpunit",
+    "build": [
+      "@lint:php",
+      "@test:unit"
+    ]
   }
 }
