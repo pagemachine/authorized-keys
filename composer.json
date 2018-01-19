@@ -14,14 +14,14 @@
     }
   ],
   "require": {
-    "php": "^7.0"
+    "php": "^7.0",
+    "phpunit/phpunit": "^6.5"
   },
   "require-dev": {
     "cakephp/cakephp-codesniffer": "^3.0",
     "jakub-onderka/php-console-highlighter": "^0.3.2",
     "jakub-onderka/php-parallel-lint": "^0.9.2",
     "mikey179/vfsStream": "^1.6",
-    "phpunit/phpunit": "^5.7",
     "slevomat/coding-standard": "^4.0",
     "squizlabs/php_codesniffer": "^3.2"
   },
