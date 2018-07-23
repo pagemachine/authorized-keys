@@ -30,6 +30,9 @@ foreach ($authorizedKeys as $key) {
 To add a key, create an instance of `PublicKey` and add it to the file:
 
 ```php
+use Pagemachine\AuthorizedKeys\PublicKey;
+
+// ... load $authorizedKeys ...
 $key = new PublicKey('ssh-rsa AAA...');
 $authorizedKeys->addKey($key);
 ```
@@ -39,6 +42,9 @@ Notice that each key is only added once, if you add it again, only its options, 
 To remove a key, wrap it in `PublicKey` and remove it from the file:
 
 ```php
+use Pagemachine\AuthorizedKeys\PublicKey;
+
+// ... load $authorizedKeys ...
 $key = new PublicKey('ssh-rsa AAA...');
 $authorizedKeys->removeKey($key);
 ```
