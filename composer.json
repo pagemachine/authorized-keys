@@ -51,7 +51,7 @@
             "@lint:php",
             "@lint:style"
         ],
-        "lint:php": "parallel-lint --exclude bin --exclude vendor .",
+        "lint:php": "parallel-lint --exclude vendor .",
         "lint:style": "phpcs",
         "test:unit": "phpunit --colors=always"
     }
