@@ -48,6 +48,7 @@
     ],
     "test:unit": "phpunit --colors=always",
     "build": [
+      "@composer install",
       "@lint",
       "@test:unit"
     ]
