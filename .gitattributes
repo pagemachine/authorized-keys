@@ -4,6 +4,7 @@
 /.gitignore export-ignore
 /.styleci.yml export-ignore
 /composer.lock export-ignore
+/docker-compose.yml export-ignore
 /phpcs.xml export-ignore
 /phpunit.xml export-ignore
 /tests export-ignore
