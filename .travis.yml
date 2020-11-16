@@ -1,19 +1,20 @@
-language: php
+dist: trusty
+language: shell
 
-php:
-  - 7
-  - 7.1
-  - 7.2
-  - 7.3
+services:
+  - docker
 
-sudo: false
-
-cache:
-  directories:
-    - $HOME/.composer/cache
+env:
+  jobs:
+    - PHP_VERSION=7.2
+    - PHP_VERSION=7.3
+    - PHP_VERSION=7.4
 
 script:
-  - composer build
+  - docker-compose run --rm app composer build
+
+after_script:
+  - docker-compose down --volumes
 
 notifications:
   slack:
