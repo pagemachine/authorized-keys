@@ -43,6 +43,8 @@
     "scripts": {
         "build": [
             "@composer install",
+            "@composer validate --ansi",
+            "@composer normalize --no-update-lock --dry-run",
             "@lint",
             "@test:unit"
         ],
