@@ -1,56 +1,58 @@
 {
-  "name": "pagemachine/authorized-keys",
-  "description": "Read, edit and write the SSH authorized_keys file",
-  "keywords": [
-    "ssh",
-    "authorized_keys",
-    "public-key"
-  ],
-  "license": "GPL-3.0-or-later",
-  "authors": [
-    {
-      "name": "Mathias Brodala",
-      "email": "mbrodala@pagemachine.de"
-    }
-  ],
-  "require": {
-    "php": "^7.0",
-    "phpunit/phpunit": "^6.5"
-  },
-  "require-dev": {
-    "cakephp/cakephp-codesniffer": "^3.0",
-    "jakub-onderka/php-console-highlighter": "^0.3.2",
-    "jakub-onderka/php-parallel-lint": "^0.9.2",
-    "mikey179/vfsstream": "^1.6",
-    "slevomat/coding-standard": "^4.0",
-    "squizlabs/php_codesniffer": "^3.2"
-  },
-  "autoload": {
-    "psr-4": {
-      "Pagemachine\\AuthorizedKeys\\": "src"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Pagemachine\\AuthorizedKeys\\Test\\": "test"
-    }
-  },
-  "config": {
-    "bin-dir": "bin",
-    "sort-packages": true
-  },
-  "scripts": {
-    "lint:php": "parallel-lint --exclude bin --exclude vendor .",
-    "lint:style": "phpcs",
-    "lint": [
-      "@lint:php",
-      "@lint:style"
+    "name": "pagemachine/authorized-keys",
+    "description": "Read, edit and write the SSH authorized_keys file",
+    "keywords": [
+        "ssh",
+        "authorized_keys",
+        "public-key"
     ],
-    "test:unit": "phpunit --colors=always",
-    "build": [
-      "@composer install",
-      "@lint",
-      "@test:unit"
-    ]
-  }
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Mathias Brodala",
+            "email": "mbrodala@pagemachine.de"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "phpunit/phpunit": "^6.5"
+    },
+    "require-dev": {
+        "cakephp/cakephp-codesniffer": "^3.0",
+        "ergebnis/composer-normalize": "^2.9",
+        "jakub-onderka/php-console-highlighter": "^0.3.2",
+        "jakub-onderka/php-parallel-lint": "^0.9.2",
+        "mikey179/vfsstream": "^1.6",
+        "slevomat/coding-standard": "^4.0",
+        "squizlabs/php_codesniffer": "^3.2"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Pagemachine\\AuthorizedKeys\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pagemachine\\AuthorizedKeys\\Test\\": "test"
+        }
+    },
+    "scripts": {
+        "build": [
+            "@composer install",
+            "@composer validate --ansi",
+            "@composer normalize --no-update-lock --dry-run",
+            "@lint",
+            "@test:unit"
+        ],
+        "lint": [
+            "@lint:php",
+            "@lint:style"
+        ],
+        "lint:php": "parallel-lint --exclude bin --exclude vendor .",
+        "lint:style": "phpcs",
+        "test:unit": "phpunit --colors=always"
+    }
 }
