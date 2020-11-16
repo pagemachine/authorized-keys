@@ -50,3 +50,9 @@ $authorizedKeys->toFile($path);
 ```
 
 The permissions of the file will be changed to 0600, namely readable and writable by the owner but nobody else.
+
+## Testing
+
+All tests can be executed with the shipped Docker Compose definition:
+
+    docker-compose run --rm app composer build
