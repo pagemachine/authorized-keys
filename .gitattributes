@@ -7,4 +7,5 @@
 /docker-compose.yml export-ignore
 /phpcs.xml export-ignore
 /phpunit.xml export-ignore
+/renovate.json export-ignore
 /tests export-ignore
