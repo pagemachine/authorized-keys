@@ -1,4 +1,4 @@
-# Authorized Keys ![CI](https://github.com/pagemachine/authorized-keys/workflows/CI/badge.svg) [![StyleCI Status](https://styleci.io/repos/81341762/shield)](https://styleci.io/repos/81341762)
+# Authorized Keys ![CI](https://github.com/pagemachine/authorized-keys/workflows/CI/badge.svg)
 
 Read, edit and write the SSH `authorized_keys` file.
 
