@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Testcase for pagemachine\AuthorizedKeys\PublicKey
  */
-class PublicKeyTest extends TestCase
+final class PublicKeyTest extends TestCase
 {
     /**
      * @test

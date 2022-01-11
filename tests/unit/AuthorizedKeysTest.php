@@ -27,7 +27,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Testcase for pagemachine\AuthorizedKeys\AuthorizedKeys
  */
-class AuthorizedKeysTest extends TestCase
+final class AuthorizedKeysTest extends TestCase
 {
     /**
      * @test
