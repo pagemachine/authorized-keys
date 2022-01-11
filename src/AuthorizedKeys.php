@@ -35,7 +35,7 @@ final class AuthorizedKeys implements \IteratorAggregate
     private array $keyLines = [];
 
     /**
-     * @param string $content content of the authorized_keys file
+     * @param $content content of the authorized_keys file
      */
     public function __construct(string $content = null)
     {
@@ -47,8 +47,7 @@ final class AuthorizedKeys implements \IteratorAggregate
     /**
      * Creates a new instance from a file
      *
-     * @param string $file path of authorized_keys file
-     * @return AuthorizedKeys
+     * @param $file path of authorized_keys file
      * @throws FilePermissionException if the authorized_keys file cannot be read
      */
     public static function fromFile(string $file): AuthorizedKeys
@@ -104,10 +103,8 @@ final class AuthorizedKeys implements \IteratorAggregate
 
     /**
      * Add a public key to the file
-     *
-     * @param PublicKey $key a public key
      */
-    public function addKey(PublicKey $key)
+    public function addKey(PublicKey $key): void
     {
         $index = $key->getKey();
 
@@ -120,10 +117,8 @@ final class AuthorizedKeys implements \IteratorAggregate
 
     /**
      * Remove a public key from the file
-     *
-     * @param PublicKey $key a public key
      */
-    public function removeKey(PublicKey $key)
+    public function removeKey(PublicKey $key): void
     {
         $index = $key->getKey();
 
@@ -134,17 +129,12 @@ final class AuthorizedKeys implements \IteratorAggregate
 
     /**
      * Returns the file content as string
-     *
-     * @return string
      */
     public function __toString(): string
     {
         return implode("\n", $this->lines);
     }
 
-    /**
-     * @return \Traversable
-     */
     public function getIterator(): \Traversable
     {
         foreach ($this->getKeys() as $key) {
