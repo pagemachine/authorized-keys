@@ -93,7 +93,7 @@ final class AuthorizedKeys implements \IteratorAggregate
     /**
      * Return all public keys in the file
      *
-     * @return PublicKey[]
+     * @return KeyInterface[]
      */
     public function getKeys(): array
     {

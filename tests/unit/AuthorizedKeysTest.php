@@ -20,6 +20,7 @@ use Pagemachine\AuthorizedKeys\AuthorizedKeys;
 use Pagemachine\AuthorizedKeys\Exception\FilePermissionException;
 use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 use Pagemachine\AuthorizedKeys\InvalidPublicKey;
+use Pagemachine\AuthorizedKeys\KeyInterface;
 use Pagemachine\AuthorizedKeys\PublicKey;
 use PHPUnit\Framework\TestCase;
 
@@ -310,7 +311,7 @@ FILE;
         $keys = $authorizedKeys->getKeys();
 
         $this->assertCount(2, $keys);
-        $this->assertContainsOnlyInstancesOf(PublicKey::class, $keys);
+        $this->assertContainsOnlyInstancesOf(KeyInterface::class, $keys);
 
         $invalidKey = $keys[1];
 

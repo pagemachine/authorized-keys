@@ -20,12 +20,12 @@ use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 /**
  * An invalid public key
  */
-class InvalidPublicKey extends PublicKey
+class InvalidPublicKey implements KeyInterface
 {
     /**
      * @var string
      */
-    protected $rawKey = '';
+    protected $key = '';
 
     /**
      * @var InvalidKeyException
@@ -38,8 +38,24 @@ class InvalidPublicKey extends PublicKey
      */
     public function __construct(string $key, InvalidKeyException $error)
     {
-        $this->rawKey = $key;
+        $this->key = $key;
         $this->error = $error;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOptions(): string
+    {
+        return '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return '';
     }
 
     /**
@@ -47,15 +63,15 @@ class InvalidPublicKey extends PublicKey
      */
     public function getKey(): string
     {
-        return $this->rawKey;
+        return $this->key;
     }
 
     /**
-     * @return InvalidKeyException
+     * @return string
      */
-    public function getError(): InvalidKeyException
+    public function getComment(): string
     {
-        return $this->error;
+        return '';
     }
 
     /**
@@ -65,6 +81,14 @@ class InvalidPublicKey extends PublicKey
      */
     public function __toString(): string
     {
-        return $this->rawKey;
+        return $this->key;
+    }
+
+    /**
+     * @return InvalidKeyException
+     */
+    public function getError(): InvalidKeyException
+    {
+        return $this->error;
     }
 }
