@@ -22,25 +22,13 @@ use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
  */
 final class PublicKey implements KeyInterface
 {
-    /**
-     * @var string $options
-     */
-    private $options = '';
+    private string $options = '';
 
-    /**
-     * @var string $type
-     */
-    private $type = '';
+    private string $type = '';
 
-    /**
-     * @var string $key
-     */
-    private $key = '';
+    private string $key = '';
 
-    /**
-     * @var string $comment
-     */
-    private $comment = '';
+    private string $comment = '';
 
     /**
      * @param string $key public key string

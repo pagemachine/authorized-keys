@@ -26,17 +26,13 @@ final class AuthorizedKeys implements \IteratorAggregate
 {
     /**
      * Lines of the file
-     *
-     * @var array
      */
-    private $lines = [];
+    private array $lines = [];
 
     /**
      * Map of keys to file lines
-     *
-     * @var array
      */
-    private $keyLines = [];
+    private array $keyLines = [];
 
     /**
      * @param string $content content of the authorized_keys file
