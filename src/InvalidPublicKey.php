@@ -22,15 +22,9 @@ use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
  */
 final class InvalidPublicKey implements KeyInterface
 {
-    /**
-     * @var string
-     */
-    private $key = '';
+    private string $key = '';
 
-    /**
-     * @var InvalidKeyException
-     */
-    private $error;
+    private InvalidKeyException $error;
 
     /**
      * @param string $key public key string
