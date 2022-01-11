@@ -25,12 +25,12 @@ final class InvalidPublicKey implements KeyInterface
     /**
      * @var string
      */
-    protected $key = '';
+    private $key = '';
 
     /**
      * @var InvalidKeyException
      */
-    protected $error;
+    private $error;
 
     /**
      * @param string $key public key string

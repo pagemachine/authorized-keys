@@ -29,14 +29,14 @@ final class AuthorizedKeys implements \IteratorAggregate
      *
      * @var array
      */
-    protected $lines = [];
+    private $lines = [];
 
     /**
      * Map of keys to file lines
      *
      * @var array
      */
-    protected $keyLines = [];
+    private $keyLines = [];
 
     /**
      * @param string $content content of the authorized_keys file
@@ -162,7 +162,7 @@ final class AuthorizedKeys implements \IteratorAggregate
      * @param string $content content of the authorized_keys file
      * @return array
      */
-    protected function parse(string $content): array
+    private function parse(string $content): array
     {
         $lines = explode("\n", $content);
         $lines = array_map('trim', $lines);

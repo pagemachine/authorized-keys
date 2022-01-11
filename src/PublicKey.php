@@ -25,22 +25,22 @@ final class PublicKey implements KeyInterface
     /**
      * @var string $options
      */
-    protected $options = '';
+    private $options = '';
 
     /**
      * @var string $type
      */
-    protected $type = '';
+    private $type = '';
 
     /**
      * @var string $key
      */
-    protected $key = '';
+    private $key = '';
 
     /**
      * @var string $comment
      */
-    protected $comment = '';
+    private $comment = '';
 
     /**
      * @param string $key public key string
@@ -156,7 +156,7 @@ final class PublicKey implements KeyInterface
      * @return array
      * @throws InvalidKeyException if the key is invalid
      */
-    protected function parse(string $key): array
+    private function parse(string $key): array
     {
         static $pattern = '/
           (?<options>[^\s]+\s+)?
