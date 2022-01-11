@@ -22,7 +22,7 @@ use Pagemachine\AuthorizedKeys\InvalidPublicKey;
 /**
  * Manages the authorized_keys file
  */
-class AuthorizedKeys implements \IteratorAggregate
+final class AuthorizedKeys implements \IteratorAggregate
 {
     /**
      * Lines of the file
