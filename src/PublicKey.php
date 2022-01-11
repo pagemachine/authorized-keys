@@ -30,6 +30,25 @@ final class PublicKey implements KeyInterface
 
     private string $comment = '';
 
+    private const KEY_PATTERN = '/
+      (?<options>[^\s]+\s+)?
+      (?<type>
+        ecdsa-sha2-nistp256
+        |
+        ecdsa-sha2-nistp384
+        |
+        ecdsa-sha2-nistp521
+        |
+        ssh-dss
+        |
+        ssh-ed25519
+        |
+        ssh-rsa
+      )
+      (?<key>\s+[^\s]+)?
+      (?<comment>\s+.+)?
+    /x';
+
     public function __construct(string $key)
     {
         $parts = $this->parse($key);
@@ -106,27 +125,7 @@ final class PublicKey implements KeyInterface
      */
     private function parse(string $key): array
     {
-        static $pattern = '/
-          (?<options>[^\s]+\s+)?
-          (?<type>
-            ecdsa-sha2-nistp256
-            |
-            ecdsa-sha2-nistp384
-            |
-            ecdsa-sha2-nistp521
-            |
-            ssh-dss
-            |
-            ssh-ed25519
-            |
-            ssh-rsa
-          )
-          (?<key>\s+[^\s]+)?
-          (?<comment>\s+.+)?
-        /x';
-        $parts = [];
-
-        preg_match($pattern, $key, $parts);
+        preg_match(self::KEY_PATTERN, $key, $parts);
         $parts = array_map('trim', $parts);
 
         if (empty($parts['type'])) {
