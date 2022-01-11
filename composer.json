@@ -44,6 +44,7 @@
         "sort-packages": true
     },
     "scripts": {
+        "analyze:php": "phpstan",
         "build": [
             "@composer install",
             "@composer validate --ansi",
@@ -53,7 +54,8 @@
         ],
         "lint": [
             "@lint:php",
-            "@lint:style"
+            "@lint:style",
+            "@analyze:php"
         ],
         "lint:php": "parallel-lint --exclude vendor .",
         "lint:style": "phpcs",
