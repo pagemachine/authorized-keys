@@ -50,7 +50,7 @@ final class AuthorizedKeys implements \IteratorAggregate
      * @param $file path of authorized_keys file
      * @throws FilePermissionException if the authorized_keys file cannot be read
      */
-    public static function fromFile(string $file): AuthorizedKeys
+    public static function fromFile(string $file): self
     {
         $content = @file_get_contents($file);
 
@@ -58,7 +58,7 @@ final class AuthorizedKeys implements \IteratorAggregate
             throw new FilePermissionException(sprintf('Could not read file "%s"', $file), 1486563469);
         }
 
-        return new static($content);
+        return new self($content);
     }
 
     /**
