@@ -71,7 +71,7 @@ final class AuthorizedKeys implements \IteratorAggregate
      * @param string $file path of the authorized_keys file
      * @throws FilePermissionException if the authorized_keys file cannot be written or permissions cannot be set
      */
-    public function toFile(string $file)
+    public function toFile(string $file): void
     {
         $result = @file_put_contents($file, (string) $this);
 

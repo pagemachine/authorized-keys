@@ -58,7 +58,7 @@ final class PublicKey implements KeyInterface
      * @param string $options
      * @return void
      */
-    public function setOptions(string $options)
+    public function setOptions(string $options): void
     {
         $this->options = $options;
     }
@@ -75,7 +75,7 @@ final class PublicKey implements KeyInterface
      * @param string $type
      * @return void
      */
-    public function setType(string $type)
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
@@ -92,7 +92,7 @@ final class PublicKey implements KeyInterface
      * @param string $key
      * @return void
      */
-    public function setKey(string $key)
+    public function setKey(string $key): void
     {
         $this->key = $key;
     }
@@ -109,7 +109,7 @@ final class PublicKey implements KeyInterface
      * @param string $comment
      * @return void
      */
-    public function setComment(string $comment)
+    public function setComment(string $comment): void
     {
         $this->comment = $comment;
     }
