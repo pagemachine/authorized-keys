@@ -22,21 +22,21 @@ use Pagemachine\AuthorizedKeys\InvalidPublicKey;
 /**
  * Manages the authorized_keys file
  */
-class AuthorizedKeys implements \IteratorAggregate
+final class AuthorizedKeys implements \IteratorAggregate
 {
     /**
      * Lines of the file
      *
      * @var array
      */
-    protected $lines = [];
+    private $lines = [];
 
     /**
      * Map of keys to file lines
      *
      * @var array
      */
-    protected $keyLines = [];
+    private $keyLines = [];
 
     /**
      * @param string $content content of the authorized_keys file
@@ -93,7 +93,7 @@ class AuthorizedKeys implements \IteratorAggregate
     /**
      * Return all public keys in the file
      *
-     * @return PublicKey[]
+     * @return KeyInterface[]
      */
     public function getKeys(): array
     {
@@ -162,7 +162,7 @@ class AuthorizedKeys implements \IteratorAggregate
      * @param string $content content of the authorized_keys file
      * @return array
      */
-    protected function parse(string $content): array
+    private function parse(string $content): array
     {
         $lines = explode("\n", $content);
         $lines = array_map('trim', $lines);
