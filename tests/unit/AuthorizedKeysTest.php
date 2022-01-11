@@ -99,8 +99,8 @@ FILE;
         $this->assertEquals($content, $file->getContent());
         $this->assertTrue($file->isReadable($file->getUser(), $file->getGroup()), 'File should be readable by the owner');
         $this->assertTrue($file->isWritable($file->getUser(), $file->getGroup()), 'File should be writable by the owner');
-        $this->assertFalse($file->isReadable('other', 'other'), 'File should not be readable by others');
-        $this->assertFalse($file->isWritable('other', 'other'), 'File should not be writable by others');
+        $this->assertFalse($file->isReadable($file->getUser() + 1, $file->getGroup() + 1), 'File should not be readable by others');
+        $this->assertFalse($file->isWritable($file->getUser() + 1, $file->getGroup() + 1), 'File should not be writable by others');
     }
 
     /**
