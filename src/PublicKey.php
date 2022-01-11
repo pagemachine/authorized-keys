@@ -30,9 +30,6 @@ final class PublicKey implements KeyInterface
 
     private string $comment = '';
 
-    /**
-     * @param string $key public key string
-     */
     public function __construct(string $key)
     {
         $parts = $this->parse($key);
@@ -46,79 +43,46 @@ final class PublicKey implements KeyInterface
         }
     }
 
-    /**
-     * @return string
-     */
     public function getOptions(): string
     {
         return $this->options;
     }
 
-    /**
-     * @param string $options
-     * @return void
-     */
     public function setOptions(string $options): void
     {
         $this->options = $options;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     * @return void
-     */
     public function setType(string $type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * @return string
-     */
     public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * @param string $key
-     * @return void
-     */
     public function setKey(string $key): void
     {
         $this->key = $key;
     }
 
-    /**
-     * @return string
-     */
     public function getComment(): string
     {
         return $this->comment;
     }
 
-    /**
-     * @param string $comment
-     * @return void
-     */
     public function setComment(string $comment): void
     {
         $this->comment = $comment;
     }
 
-    /**
-     * Returns the file content as string
-     *
-     * @return string
-     */
     public function __toString(): string
     {
         $parts = [];
@@ -138,10 +102,6 @@ final class PublicKey implements KeyInterface
     }
 
     /**
-     * Parses a publie key string
-     *
-     * @param string $key public key string
-     * @return array
      * @throws InvalidKeyException if the key is invalid
      */
     private function parse(string $key): array

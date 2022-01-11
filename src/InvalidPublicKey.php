@@ -36,33 +36,21 @@ final class InvalidPublicKey implements KeyInterface
         $this->error = $error;
     }
 
-    /**
-     * @return string
-     */
     public function getOptions(): string
     {
         return '';
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return '';
     }
 
-    /**
-     * @return string
-     */
     public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * @return string
-     */
     public function getComment(): string
     {
         return '';
@@ -70,17 +58,12 @@ final class InvalidPublicKey implements KeyInterface
 
     /**
      * Returns the file content as string
-     *
-     * @return string
      */
     public function __toString(): string
     {
         return $this->key;
     }
 
-    /**
-     * @return InvalidKeyException
-     */
     public function getError(): InvalidKeyException
     {
         return $this->error;
