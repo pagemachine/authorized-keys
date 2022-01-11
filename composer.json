@@ -36,6 +36,10 @@
         }
     },
     "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true
+        },
         "sort-packages": true
     },
     "scripts": {
