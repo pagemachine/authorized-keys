@@ -20,7 +20,7 @@ use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 /**
  * An invalid public key
  */
-class InvalidPublicKey implements KeyInterface
+final class InvalidPublicKey implements KeyInterface
 {
     /**
      * @var string

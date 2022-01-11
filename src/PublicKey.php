@@ -20,7 +20,7 @@ use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 /**
  * Represents a public key
  */
-class PublicKey implements KeyInterface
+final class PublicKey implements KeyInterface
 {
     /**
      * @var string $options
