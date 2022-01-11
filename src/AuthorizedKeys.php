@@ -34,9 +34,6 @@ final class AuthorizedKeys implements \IteratorAggregate
      */
     private array $keyLines = [];
 
-    /**
-     * @param $content content of the authorized_keys file
-     */
     public function __construct(string $content = null)
     {
         if (!empty($content)) {
@@ -47,7 +44,6 @@ final class AuthorizedKeys implements \IteratorAggregate
     /**
      * Creates a new instance from a file
      *
-     * @param $file path of authorized_keys file
      * @throws FilePermissionException if the authorized_keys file cannot be read
      */
     public static function fromFile(string $file): self
