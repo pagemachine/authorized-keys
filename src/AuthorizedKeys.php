@@ -66,7 +66,7 @@ final class AuthorizedKeys implements \IteratorAggregate
      * @param string $file path of the authorized_keys file
      * @throws FilePermissionException if the authorized_keys file cannot be written or permissions cannot be set
      */
-    public function toFile(string $file): void
+    public function toFile(string $file): self
     {
         $result = @file_put_contents($file, (string) $this);
 
@@ -79,6 +79,8 @@ final class AuthorizedKeys implements \IteratorAggregate
         if ($result === false) {
             throw new FilePermissionException(sprintf('Could not change permissions of file "%s"', $file), 1486563909);
         }
+
+        return $this;
     }
 
     /**
@@ -100,7 +102,7 @@ final class AuthorizedKeys implements \IteratorAggregate
     /**
      * Add a public key to the file
      */
-    public function addKey(PublicKey $key): void
+    public function addKey(PublicKey $key): self
     {
         $index = $key->getKey();
 
@@ -109,18 +111,22 @@ final class AuthorizedKeys implements \IteratorAggregate
         }
 
         $this->lines[$this->keyLines[$index]] = $key;
+
+        return $this;
     }
 
     /**
      * Remove a public key from the file
      */
-    public function removeKey(PublicKey $key): void
+    public function removeKey(PublicKey $key): self
     {
         $index = $key->getKey();
 
         if (isset($this->keyLines[$index])) {
             unset($this->lines[$this->keyLines[$index]], $this->keyLines[$index]);
         }
+
+        return $this;
     }
 
     /**
