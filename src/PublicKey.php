@@ -15,6 +15,7 @@ namespace Pagemachine\AuthorizedKeys;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Pagemachine\AuthorizedKeys\Exception\FilePermissionException;
 use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 
 /**
@@ -62,14 +63,32 @@ final class PublicKey implements KeyInterface
         }
     }
 
+    /**
+     * Creates a new instance from a file
+     *
+     * @throws FilePermissionException if the authorized_keys file cannot be read
+     */
+    public static function fromFile(string $file): self
+    {
+        $content = @file_get_contents($file);
+
+        if ($content === false) {
+            throw new FilePermissionException(sprintf('Could not read file "%s"', $file), 1678790797);
+        }
+
+        return new self($content);
+    }
+
     public function getOptions(): string
     {
         return $this->options;
     }
 
-    public function setOptions(string $options): void
+    public function setOptions(string $options): self
     {
         $this->options = $options;
+
+        return $this;
     }
 
     public function getType(): string
@@ -77,9 +96,11 @@ final class PublicKey implements KeyInterface
         return $this->type;
     }
 
-    public function setType(string $type): void
+    public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
     }
 
     public function getKey(): string
@@ -87,9 +108,11 @@ final class PublicKey implements KeyInterface
         return $this->key;
     }
 
-    public function setKey(string $key): void
+    public function setKey(string $key): self
     {
         $this->key = $key;
+
+        return $this;
     }
 
     public function getComment(): string
@@ -97,9 +120,11 @@ final class PublicKey implements KeyInterface
         return $this->comment;
     }
 
-    public function setComment(string $comment): void
+    public function setComment(string $comment): self
     {
         $this->comment = $comment;
+
+        return $this;
     }
 
     public function __toString(): string
