@@ -106,6 +106,46 @@ FILE;
     /**
      * @test
      */
+    public function keepsEmptyLinesAndCommentsWhenWritingToFile()
+    {
+        $content = <<<FILE
+ssh-rsa AAA first
+
+#ssh-rsa BBB second
+
+# Some explanation
+ssh-rsa BBB second
+FILE;
+
+        $authorizedKeys = new AuthorizedKeys($content);
+
+        $thirdKey = new PublicKey('ssh-rsa DDD third');
+        $authorizedKeys->addKey($thirdKey);
+
+        $secondKey = new PublicKey('ssh-rsa BBB second');
+        $authorizedKeys->removeKey($secondKey);
+
+        $directory = vfsStream::setup();
+        $file = vfsStream::newFile('authorized_keys')
+            ->at($directory);
+
+        $authorizedKeys->toFile($file->url());
+
+        $expected = <<<FILE
+ssh-rsa AAA first
+
+#ssh-rsa BBB second
+
+# Some explanation
+ssh-rsa DDD third
+FILE;
+
+        $this->assertEquals($expected, $file->getContent());
+    }
+
+    /**
+     * @test
+     */
     public function throwsExceptionOnFileWriteError()
     {
         $content = <<<FILE
