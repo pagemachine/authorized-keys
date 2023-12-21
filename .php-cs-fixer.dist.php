@@ -13,7 +13,7 @@ return (new PhpCsFixer\Config())
     ->setRules([
         '@PSR12' => true,
         '@PSR12:risky' => true,
-        '@PHP74Migration' => true,
+        '@PHP80Migration' => true,
     ])
     ->setFinder($finder)
 ;
