@@ -56,13 +56,14 @@
             "@lint",
             "@test:unit"
         ],
+        "fix:style": "php-cs-fixer fix --diff",
         "lint": [
             "@lint:php",
             "@lint:style",
             "@analyze:php"
         ],
         "lint:php": "parallel-lint --exclude vendor .",
-        "lint:style": "phpcs",
+        "lint:style": "php-cs-fixer fix --dry-run --diff",
         "test:unit": "phpunit --colors=always"
     }
 }
