@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Pagemachine\AuthorizedKeys\Test;
 
@@ -35,8 +35,8 @@ final class AuthorizedKeysTest extends TestCase
     public function constructsFromString()
     {
         $content = <<<FILE
-ssh-rsa AAA test
-FILE;
+            ssh-rsa AAA test
+            FILE;
 
         $authorizedKeys = new AuthorizedKeys($content);
 
@@ -49,9 +49,9 @@ FILE;
     public function constructsFromFile()
     {
         $content = <<<FILE
-# A comment
-ssh-rsa AAA test
-FILE;
+            # A comment
+            ssh-rsa AAA test
+            FILE;
 
         $directory = vfsStream::setup();
         $file = vfsStream::newFile('authorized_keys')
@@ -84,8 +84,8 @@ FILE;
     public function writesToFile()
     {
         $content = <<<FILE
-ssh-rsa AAA test
-FILE;
+            ssh-rsa AAA test
+            FILE;
 
         $authorizedKeys = new AuthorizedKeys($content);
 
@@ -109,13 +109,13 @@ FILE;
     public function keepsEmptyLinesAndCommentsWhenWritingToFile()
     {
         $content = <<<FILE
-ssh-rsa AAA first
+            ssh-rsa AAA first
 
-#ssh-rsa BBB second
+            #ssh-rsa BBB second
 
-# Some explanation
-ssh-rsa BBB second
-FILE;
+            # Some explanation
+            ssh-rsa BBB second
+            FILE;
 
         $authorizedKeys = new AuthorizedKeys($content);
 
@@ -132,13 +132,13 @@ FILE;
         $authorizedKeys->toFile($file->url());
 
         $expected = <<<FILE
-ssh-rsa AAA first
+            ssh-rsa AAA first
 
-#ssh-rsa BBB second
+            #ssh-rsa BBB second
 
-# Some explanation
-ssh-rsa DDD third
-FILE;
+            # Some explanation
+            ssh-rsa DDD third
+            FILE;
 
         $this->assertEquals($expected, $file->getContent());
     }
@@ -149,8 +149,8 @@ FILE;
     public function throwsExceptionOnFileWriteError()
     {
         $content = <<<FILE
-ssh-rsa AAA test
-FILE;
+            ssh-rsa AAA test
+            FILE;
 
         $authorizedKeys = new AuthorizedKeys($content);
 
@@ -171,8 +171,8 @@ FILE;
     public function throwsExceptionOnFilePermissionFixError()
     {
         $content = <<<FILE
-ssh-rsa AAA test
-FILE;
+            ssh-rsa AAA test
+            FILE;
 
         $authorizedKeys = new AuthorizedKeys($content);
 
@@ -193,11 +193,11 @@ FILE;
     public function getsKeys()
     {
         $content = <<<FILE
-# A comment
-ssh-rsa AAA first
+            # A comment
+            ssh-rsa AAA first
 
-ssh-rsa BBB second
-FILE;
+            ssh-rsa BBB second
+            FILE;
 
         $authorizedKeys = new AuthorizedKeys($content);
 
@@ -213,11 +213,11 @@ FILE;
     public function getsKeysByIteration()
     {
         $content = <<<FILE
-# A comment
-ssh-rsa AAA first
+            # A comment
+            ssh-rsa AAA first
 
-ssh-rsa BBB second
-FILE;
+            ssh-rsa BBB second
+            FILE;
 
         $authorizedKeys = new AuthorizedKeys($content);
 
@@ -245,9 +245,9 @@ FILE;
         $authorizedKeys->addKey($secondKey);
 
         $expected = <<<FILE
-ssh-rsa AAA first
-ssh-rsa BBB second
-FILE;
+            ssh-rsa AAA first
+            ssh-rsa BBB second
+            FILE;
 
         $this->assertEquals($expected, (string) $authorizedKeys);
     }
@@ -265,8 +265,8 @@ FILE;
         $authorizedKeys->addKey($publicKey);
 
         $expected = <<<FILE
-ssh-rsa AAA test
-FILE;
+            ssh-rsa AAA test
+            FILE;
 
         $this->assertEquals($expected, (string) $authorizedKeys);
     }
@@ -283,9 +283,9 @@ FILE;
         $authorizedKeys->addKey($publicKey);
 
         $expected = <<<FILE
-ssh-rsa AAA first
-ssh-rsa BBB second
-FILE;
+            ssh-rsa AAA first
+            ssh-rsa BBB second
+            FILE;
 
         $this->assertEquals($expected, (string) $authorizedKeys);
     }
@@ -296,10 +296,10 @@ FILE;
     public function removesKeys()
     {
         $content = <<<FILE
-# A comment
-ssh-rsa AAA first
-ssh-rsa BBB second
-FILE;
+            # A comment
+            ssh-rsa AAA first
+            ssh-rsa BBB second
+            FILE;
 
         $authorizedKeys = new AuthorizedKeys($content);
         $firstKey = new PublicKey('ssh-rsa AAA');
@@ -307,9 +307,9 @@ FILE;
         $authorizedKeys->removeKey($firstKey);
 
         $expected = <<<FILE
-# A comment
-ssh-rsa BBB second
-FILE;
+            # A comment
+            ssh-rsa BBB second
+            FILE;
 
         $this->assertEquals($expected, (string) $authorizedKeys);
     }
@@ -320,9 +320,9 @@ FILE;
     public function removesKeysOnce()
     {
         $content = <<<FILE
-ssh-rsa AAA first
-ssh-rsa BBB second
-FILE;
+            ssh-rsa AAA first
+            ssh-rsa BBB second
+            FILE;
 
         $authorizedKeys = new AuthorizedKeys($content);
         $firstKey = new PublicKey('ssh-rsa AAA');
@@ -331,8 +331,8 @@ FILE;
         $authorizedKeys->removeKey($firstKey);
 
         $expected = <<<FILE
-ssh-rsa BBB second
-FILE;
+            ssh-rsa BBB second
+            FILE;
 
         $this->assertEquals($expected, (string) $authorizedKeys);
     }
@@ -343,9 +343,9 @@ FILE;
     public function handlesInvalidKeys()
     {
         $content = <<<FILE
-ssh-rsa AAA first
-foo BBB second
-FILE;
+            ssh-rsa AAA first
+            foo BBB second
+            FILE;
 
         $authorizedKeys = new AuthorizedKeys($content);
         $keys = $authorizedKeys->getKeys();

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Pagemachine\AuthorizedKeys\Test;
 
@@ -56,8 +56,8 @@ final class PublicKeyTest extends TestCase
     public function parsesKeyParts()
     {
         $key = <<<FILE
-command="/bin/test" ssh-rsa AAA test
-FILE;
+            command="/bin/test" ssh-rsa AAA test
+            FILE;
 
         $publicKey = new PublicKey($key);
 
@@ -73,8 +73,8 @@ FILE;
     public function setsKeyParts()
     {
         $key = <<<FILE
-command="/bin/test" ssh-rsa AAA test
-FILE;
+            command="/bin/test" ssh-rsa AAA test
+            FILE;
 
         $publicKey = new PublicKey($key);
 
