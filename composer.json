@@ -59,7 +59,7 @@
             "@lint:style",
             "@analyze:php"
         ],
-        "lint:php": "parallel-lint --exclude vendor .",
+        "lint:php": "parallel-lint --show-deprecated --exclude vendor .",
         "lint:style": "php-cs-fixer fix --dry-run --diff",
         "test:unit": "phpunit --colors=always"
     }
