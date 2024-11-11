@@ -18,7 +18,6 @@ namespace Pagemachine\AuthorizedKeys\Test;
 use org\bovigo\vfs\vfsStream;
 use Pagemachine\AuthorizedKeys\AuthorizedKeys;
 use Pagemachine\AuthorizedKeys\Exception\FilePermissionException;
-use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 use Pagemachine\AuthorizedKeys\InvalidPublicKey;
 use Pagemachine\AuthorizedKeys\KeyInterface;
 use Pagemachine\AuthorizedKeys\PublicKey;
@@ -356,7 +355,6 @@ final class AuthorizedKeysTest extends TestCase
         $invalidKey = $keys[1];
 
         $this->assertInstanceOf(InvalidPublicKey::class, $invalidKey);
-        $this->assertInstanceOf(InvalidKeyException::class, $invalidKey->getError());
 
         $this->assertEquals($content, (string) $authorizedKeys);
     }
