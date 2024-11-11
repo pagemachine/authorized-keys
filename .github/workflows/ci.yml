@@ -29,8 +29,8 @@ jobs:
       - name: Build
         env:
           PHP_VERSION: ${{matrix.php}}
-        run: docker-compose run --rm app composer build
+        run: docker compose run --rm app composer build
 
       - name: Cleanup
         if: ${{ always() }}
-        run: docker-compose down --volumes
+        run: docker compose down --volumes
