@@ -139,9 +139,7 @@ final class AuthorizedKeys implements \IteratorAggregate
 
     public function getIterator(): \Traversable
     {
-        foreach ($this->getKeys() as $key) {
-            yield $key;
-        }
+        yield from $this->getKeys();
     }
 
     /**
