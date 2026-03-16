@@ -41,7 +41,7 @@ final class PublicKeyTest extends TestCase
     /**
      * @return array
      */
-    public function keys(): array
+    public static function keys(): array
     {
         return [
             'minimum' => ['ssh-rsa AAA'],
