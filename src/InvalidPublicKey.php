@@ -20,7 +20,7 @@ use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 /**
  * An invalid public key
  */
-final class InvalidPublicKey implements KeyInterface
+final readonly class InvalidPublicKey implements KeyInterface
 {
     private string $key = '';
 
