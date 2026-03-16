@@ -46,25 +46,34 @@
         "sort-packages": true
     },
     "scripts": {
-        "analyze:php": "phpstan",
         "build": [
             "@composer install",
-            "@composer validate --ansi",
-            "@composer normalize --no-update-lock --dry-run",
-            "@lint",
-            "@test:unit"
+            "@test"
         ],
-        "fix:style": "php-cs-fixer fix --diff",
-        "lint": [
-            "@lint:php",
-            "@lint:style",
-            "@analyze:php",
+        "composer:lint": [
+            "@composer validate --ansi",
+            "@composer normalize --no-update-lock --dry-run"
+        ],
+        "php:lint": [
+            "@php:syntax:lint",
+            "@php:style:lint",
+            "@php:static:lint",
             "@php:rector:lint"
         ],
-        "lint:php": "parallel-lint --show-deprecated --exclude vendor .",
-        "lint:style": "php-cs-fixer fix --dry-run --diff",
         "php:rector:fix": "rector",
         "php:rector:lint": "rector --dry-run --no-progress-bar",
-        "test:unit": "phpunit --colors=always"
+        "php:static:lint": "phpstan",
+        "php:style:fix": "php-cs-fixer fix --diff",
+        "php:style:lint": "php-cs-fixer fix --dry-run --diff",
+        "php:syntax:lint": "parallel-lint --show-deprecated --exclude vendor .",
+        "php:test": [
+            "@php:unit:test"
+        ],
+        "php:unit:test": "phpunit --colors=always",
+        "test": [
+            "@composer:lint",
+            "@php:lint",
+            "@php:test"
+        ]
     }
 }
