@@ -151,7 +151,7 @@ final class PublicKey implements KeyInterface
     private function parse(string $key): array
     {
         preg_match(self::KEY_PATTERN, $key, $parts);
-        $parts = array_map('trim', $parts);
+        $parts = array_map(trim(...), $parts);
 
         if (empty($parts['type'])) {
             throw new InvalidKeyException('Invalid key type', 1486561051);

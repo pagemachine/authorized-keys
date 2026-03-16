@@ -151,7 +151,7 @@ final class AuthorizedKeys implements \IteratorAggregate, \Stringable
     private function parse(string $content): array
     {
         $lines = explode("\n", $content);
-        $lines = array_map('trim', $lines);
+        $lines = array_map(trim(...), $lines);
 
         foreach ($lines as $i => $line) {
             if (!empty($line) && $line[0] !== '#') {
