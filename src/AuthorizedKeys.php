@@ -34,9 +34,9 @@ final class AuthorizedKeys implements \IteratorAggregate
      */
     private array $keyLines = [];
 
-    public function __construct(string $content = null)
+    public function __construct(string $content = '')
     {
-        if (!empty($content)) {
+        if ($content !== '') {
             $this->lines = $this->parse($content);
         }
     }

@@ -235,7 +235,7 @@ final class AuthorizedKeysTest extends TestCase
      */
     public function addsKeys()
     {
-        $authorizedKeys = new AuthorizedKeys('');
+        $authorizedKeys = new AuthorizedKeys();
 
         $firstKey = new PublicKey('ssh-rsa AAA first');
         $authorizedKeys->addKey($firstKey);
@@ -256,7 +256,7 @@ final class AuthorizedKeysTest extends TestCase
      */
     public function addsKeysOnce()
     {
-        $authorizedKeys = new AuthorizedKeys('');
+        $authorizedKeys = new AuthorizedKeys();
 
         $publicKey = new PublicKey('ssh-rsa AAA test');
 
