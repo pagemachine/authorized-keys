@@ -21,6 +21,7 @@ return RectorConfig::configure()
         codingStyle: true,
         instanceOf: true,
         earlyReturn: true,
+        phpunitCodeQuality: true,
     )
     ->withComposerBased(
         phpunit: true,

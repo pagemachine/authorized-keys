@@ -37,7 +37,7 @@ final class AuthorizedKeysTest extends TestCase
 
         $authorizedKeys = new AuthorizedKeys($content);
 
-        $this->assertEquals($content, (string) $authorizedKeys);
+        $this->assertSame($content, (string) $authorizedKeys);
     }
 
     #[Test]
@@ -55,7 +55,7 @@ final class AuthorizedKeysTest extends TestCase
 
         $authorizedKeys = AuthorizedKeys::fromFile($file->url());
 
-        $this->assertEquals($content, (string) $authorizedKeys);
+        $this->assertSame($content, (string) $authorizedKeys);
     }
 
     #[Test]
@@ -228,7 +228,7 @@ final class AuthorizedKeysTest extends TestCase
             ssh-rsa BBB second
             FILE;
 
-        $this->assertEquals($expected, (string) $authorizedKeys);
+        $this->assertSame($expected, (string) $authorizedKeys);
     }
 
     #[Test]
@@ -245,7 +245,7 @@ final class AuthorizedKeysTest extends TestCase
             ssh-rsa AAA test
             FILE;
 
-        $this->assertEquals($expected, (string) $authorizedKeys);
+        $this->assertSame($expected, (string) $authorizedKeys);
     }
 
     #[Test]
@@ -262,7 +262,7 @@ final class AuthorizedKeysTest extends TestCase
             ssh-rsa BBB second
             FILE;
 
-        $this->assertEquals($expected, (string) $authorizedKeys);
+        $this->assertSame($expected, (string) $authorizedKeys);
     }
 
     #[Test]
@@ -284,7 +284,7 @@ final class AuthorizedKeysTest extends TestCase
             ssh-rsa BBB second
             FILE;
 
-        $this->assertEquals($expected, (string) $authorizedKeys);
+        $this->assertSame($expected, (string) $authorizedKeys);
     }
 
     #[Test]
@@ -305,7 +305,7 @@ final class AuthorizedKeysTest extends TestCase
             ssh-rsa BBB second
             FILE;
 
-        $this->assertEquals($expected, (string) $authorizedKeys);
+        $this->assertSame($expected, (string) $authorizedKeys);
     }
 
     #[Test]
@@ -326,6 +326,6 @@ final class AuthorizedKeysTest extends TestCase
 
         $this->assertInstanceOf(InvalidPublicKey::class, $invalidKey);
 
-        $this->assertEquals($content, (string) $authorizedKeys);
+        $this->assertSame($content, (string) $authorizedKeys);
     }
 }

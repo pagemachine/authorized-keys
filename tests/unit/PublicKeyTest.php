@@ -38,14 +38,12 @@ final class PublicKeyTest extends TestCase
         $this->assertEquals($key, (string) $publicKey);
     }
 
-    public static function keys(): array
+    public static function keys(): \Iterator
     {
-        return [
-            'minimum' => ['ssh-rsa AAA'],
-            'with comment' => ['ssh-rsa AAA test'],
-            'with options' => ['command="/bin/test" ssh-rsa AAA'],
-            'with options and comment' => ['command="/bin/test" ssh-rsa AAA test'],
-        ];
+        yield 'minimum' => ['ssh-rsa AAA'];
+        yield 'with comment' => ['ssh-rsa AAA test'];
+        yield 'with options' => ['command="/bin/test" ssh-rsa AAA'];
+        yield 'with options and comment' => ['command="/bin/test" ssh-rsa AAA test'];
     }
 
     #[Test]
@@ -57,10 +55,10 @@ final class PublicKeyTest extends TestCase
 
         $publicKey = new PublicKey($key);
 
-        $this->assertEquals('command="/bin/test"', $publicKey->getOptions());
-        $this->assertEquals('ssh-rsa', $publicKey->getType());
-        $this->assertEquals('AAA', $publicKey->getKey());
-        $this->assertEquals('test', $publicKey->getComment());
+        $this->assertSame('command="/bin/test"', $publicKey->getOptions());
+        $this->assertSame('ssh-rsa', $publicKey->getType());
+        $this->assertSame('AAA', $publicKey->getKey());
+        $this->assertSame('test', $publicKey->getComment());
     }
 
     #[Test]
@@ -73,18 +71,18 @@ final class PublicKeyTest extends TestCase
         $publicKey = new PublicKey($key);
 
         $publicKey->setOptions('agent-forwarding');
-        $this->assertEquals('agent-forwarding', $publicKey->getOptions());
+        $this->assertSame('agent-forwarding', $publicKey->getOptions());
 
         $publicKey->setType('ssh-dss');
-        $this->assertEquals('ssh-dss', $publicKey->getType());
+        $this->assertSame('ssh-dss', $publicKey->getType());
 
         $publicKey->setKey('BBB');
-        $this->assertEquals('BBB', $publicKey->getKey());
+        $this->assertSame('BBB', $publicKey->getKey());
 
         $publicKey->setComment('foo');
-        $this->assertEquals('foo', $publicKey->getComment());
+        $this->assertSame('foo', $publicKey->getComment());
 
-        $this->assertEquals('agent-forwarding ssh-dss BBB foo', (string) $publicKey);
+        $this->assertSame('agent-forwarding ssh-dss BBB foo', (string) $publicKey);
     }
 
     #[Test]
