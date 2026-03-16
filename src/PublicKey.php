@@ -131,14 +131,14 @@ final class PublicKey implements KeyInterface
     {
         $parts = [];
 
-        if (!empty($this->options)) {
+        if ($this->options !== '') {
             $parts[] = $this->options;
         }
 
         $parts[] = $this->type;
         $parts[] = $this->key;
 
-        if (!empty($this->comment)) {
+        if ($this->comment !== '') {
             $parts[] = $this->comment;
         }
 

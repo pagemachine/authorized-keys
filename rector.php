@@ -15,6 +15,9 @@ return RectorConfig::configure()
         importShortClasses: false,
         removeUnusedImports: true,
     )
+    ->withPreparedSets(
+        codeQuality: true,
+    )
     ->withComposerBased(
         phpunit: true,
     )
