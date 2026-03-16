@@ -146,7 +146,6 @@ final class AuthorizedKeys implements \IteratorAggregate, \Stringable
      * Parses content of a authorized_keys file
      *
      * @param string $content content of the authorized_keys file
-     * @return array
      */
     private function parse(string $content): array
     {

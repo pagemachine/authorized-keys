@@ -16,6 +16,7 @@ return RectorConfig::configure()
         removeUnusedImports: true,
     )
     ->withPreparedSets(
+        deadCode: true,
         codeQuality: true,
         codingStyle: true,
     )

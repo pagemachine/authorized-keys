@@ -38,9 +38,6 @@ final class PublicKeyTest extends TestCase
         $this->assertEquals($key, (string) $publicKey);
     }
 
-    /**
-     * @return array
-     */
     public static function keys(): array
     {
         return [
