@@ -1,6 +1,9 @@
 <?php
 
-$finder = (new PhpCsFixer\Finder())
+use PhpCsFixer\Finder;
+use PhpCsFixer\Config;
+
+$finder = (new Finder())
     ->in(__DIR__)
     ->ignoreVCSIgnored(true)
     ->exclude([
@@ -8,7 +11,7 @@ $finder = (new PhpCsFixer\Finder())
     ])
 ;
 
-return (new PhpCsFixer\Config())
+return (new Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@PSR12' => true,
