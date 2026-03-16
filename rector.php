@@ -19,6 +19,7 @@ return RectorConfig::configure()
         deadCode: true,
         codeQuality: true,
         codingStyle: true,
+        earlyReturn: true,
     )
     ->withComposerBased(
         phpunit: true,
