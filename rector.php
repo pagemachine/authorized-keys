@@ -19,6 +19,7 @@ return RectorConfig::configure()
         deadCode: true,
         codeQuality: true,
         codingStyle: true,
+        instanceOf: true,
         earlyReturn: true,
     )
     ->withComposerBased(
