@@ -17,6 +17,7 @@ return RectorConfig::configure()
     )
     ->withPreparedSets(
         codeQuality: true,
+        codingStyle: true,
     )
     ->withComposerBased(
         phpunit: true,
