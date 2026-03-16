@@ -58,10 +58,13 @@
         "lint": [
             "@lint:php",
             "@lint:style",
-            "@analyze:php"
+            "@analyze:php",
+            "@php:rector:lint"
         ],
         "lint:php": "parallel-lint --show-deprecated --exclude vendor .",
         "lint:style": "php-cs-fixer fix --dry-run --diff",
+        "php:rector:fix": "rector",
+        "php:rector:lint": "rector --dry-run --no-progress-bar",
         "test:unit": "phpunit --colors=always"
     }
 }
