@@ -1,3 +1,0 @@
-{
-    "image": "thecodingmachine/php:${localEnv:PHP_VERSION:8.0}-v4-cli"
-}
