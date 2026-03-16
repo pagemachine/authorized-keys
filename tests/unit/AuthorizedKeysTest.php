@@ -29,7 +29,7 @@ use PHPUnit\Framework\TestCase;
 final class AuthorizedKeysTest extends TestCase
 {
     #[Test]
-    public function constructsFromString()
+    public function constructsFromString(): void
     {
         $content = <<<FILE
             ssh-rsa AAA test
@@ -41,7 +41,7 @@ final class AuthorizedKeysTest extends TestCase
     }
 
     #[Test]
-    public function constructsFromFile()
+    public function constructsFromFile(): void
     {
         $content = <<<FILE
             # A comment
@@ -59,7 +59,7 @@ final class AuthorizedKeysTest extends TestCase
     }
 
     #[Test]
-    public function throwsExceptionOnFileReadError()
+    public function throwsExceptionOnFileReadError(): void
     {
         $directory = vfsStream::setup();
         $file = vfsStream::newFile('authorized_keys')
@@ -72,7 +72,7 @@ final class AuthorizedKeysTest extends TestCase
     }
 
     #[Test]
-    public function writesToFile()
+    public function writesToFile(): void
     {
         $content = <<<FILE
             ssh-rsa AAA test
@@ -95,7 +95,7 @@ final class AuthorizedKeysTest extends TestCase
     }
 
     #[Test]
-    public function keepsEmptyLinesAndCommentsWhenWritingToFile()
+    public function keepsEmptyLinesAndCommentsWhenWritingToFile(): void
     {
         $content = <<<FILE
             ssh-rsa AAA first
@@ -133,7 +133,7 @@ final class AuthorizedKeysTest extends TestCase
     }
 
     #[Test]
-    public function throwsExceptionOnFileWriteError()
+    public function throwsExceptionOnFileWriteError(): void
     {
         $content = <<<FILE
             ssh-rsa AAA test
@@ -153,7 +153,7 @@ final class AuthorizedKeysTest extends TestCase
     }
 
     #[Test]
-    public function throwsExceptionOnFilePermissionFixError()
+    public function throwsExceptionOnFilePermissionFixError(): void
     {
         $content = <<<FILE
             ssh-rsa AAA test
@@ -173,7 +173,7 @@ final class AuthorizedKeysTest extends TestCase
     }
 
     #[Test]
-    public function getsKeys()
+    public function getsKeys(): void
     {
         $content = <<<FILE
             # A comment
@@ -191,7 +191,7 @@ final class AuthorizedKeysTest extends TestCase
     }
 
     #[Test]
-    public function getsKeysByIteration()
+    public function getsKeysByIteration(): void
     {
         $content = <<<FILE
             # A comment
@@ -213,7 +213,7 @@ final class AuthorizedKeysTest extends TestCase
     }
 
     #[Test]
-    public function addsKeys()
+    public function addsKeys(): void
     {
         $authorizedKeys = new AuthorizedKeys();
 
@@ -232,7 +232,7 @@ final class AuthorizedKeysTest extends TestCase
     }
 
     #[Test]
-    public function addsKeysOnce()
+    public function addsKeysOnce(): void
     {
         $authorizedKeys = new AuthorizedKeys();
 
@@ -249,7 +249,7 @@ final class AuthorizedKeysTest extends TestCase
     }
 
     #[Test]
-    public function addsKeysAvoidsMissingTrailingNewline()
+    public function addsKeysAvoidsMissingTrailingNewline(): void
     {
         $authorizedKeys = new AuthorizedKeys('ssh-rsa AAA first');
 
@@ -266,7 +266,7 @@ final class AuthorizedKeysTest extends TestCase
     }
 
     #[Test]
-    public function removesKeys()
+    public function removesKeys(): void
     {
         $content = <<<FILE
             # A comment
@@ -288,7 +288,7 @@ final class AuthorizedKeysTest extends TestCase
     }
 
     #[Test]
-    public function removesKeysOnce()
+    public function removesKeysOnce(): void
     {
         $content = <<<FILE
             ssh-rsa AAA first
@@ -309,7 +309,7 @@ final class AuthorizedKeysTest extends TestCase
     }
 
     #[Test]
-    public function handlesInvalidKeys()
+    public function handlesInvalidKeys(): void
     {
         $content = <<<FILE
             ssh-rsa AAA first

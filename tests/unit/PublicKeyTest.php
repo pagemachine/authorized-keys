@@ -25,17 +25,13 @@ use PHPUnit\Framework\TestCase;
  */
 final class PublicKeyTest extends TestCase
 {
-    /**
-     *
-     * @param string $key
-     */
     #[Test]
     #[DataProvider('keys')]
-    public function constructsFromString($key)
+    public function constructsFromString(string $key): void
     {
         $publicKey = new PublicKey($key);
 
-        $this->assertEquals($key, (string) $publicKey);
+        $this->assertSame($key, (string) $publicKey);
     }
 
     public static function keys(): \Iterator
@@ -47,7 +43,7 @@ final class PublicKeyTest extends TestCase
     }
 
     #[Test]
-    public function parsesKeyParts()
+    public function parsesKeyParts(): void
     {
         $key = <<<FILE
             command="/bin/test" ssh-rsa AAA test
@@ -62,7 +58,7 @@ final class PublicKeyTest extends TestCase
     }
 
     #[Test]
-    public function setsKeyParts()
+    public function setsKeyParts(): void
     {
         $key = <<<FILE
             command="/bin/test" ssh-rsa AAA test
@@ -86,7 +82,7 @@ final class PublicKeyTest extends TestCase
     }
 
     #[Test]
-    public function throwsExceptionOnInvalidType()
+    public function throwsExceptionOnInvalidType(): void
     {
         $this->expectException(InvalidKeyException::class);
         $this->expectExceptionCode(1486561051);
@@ -95,7 +91,7 @@ final class PublicKeyTest extends TestCase
     }
 
     #[Test]
-    public function throwsExceptionOnEmptyKey()
+    public function throwsExceptionOnEmptyKey(): void
     {
         $this->expectException(InvalidKeyException::class);
         $this->expectExceptionCode(1486561621);
