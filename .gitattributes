@@ -1,14 +1,16 @@
+/.devcontainer export-ignore
 /.editorconfig export-ignore
 /.gitattributes export-ignore
 /.github export-ignore
 /.gitignore export-ignore
 /.php-cs-fixer.* export-ignore
-/.phpunit.result.cache export-ignore
+/.*.cache export-ignore
 /.styleci.yml export-ignore
 /composer.lock export-ignore
 /docker-compose.yml export-ignore
 /phpstan.neon export-ignore
 /phpunit.xml export-ignore
+/rector.php export-ignore
 /renovate.json export-ignore
 /tests export-ignore
 /vendor export-ignore
