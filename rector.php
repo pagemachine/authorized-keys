@@ -15,4 +15,5 @@ return RectorConfig::configure()
         importShortClasses: false,
         removeUnusedImports: true,
     )
+    ->withAttributesSets()
 ;

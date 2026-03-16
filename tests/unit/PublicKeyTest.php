@@ -14,7 +14,8 @@ namespace Pagemachine\AuthorizedKeys\Test;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 use Pagemachine\AuthorizedKeys\PublicKey;
 use PHPUnit\Framework\TestCase;
@@ -25,11 +26,11 @@ use PHPUnit\Framework\TestCase;
 final class PublicKeyTest extends TestCase
 {
     /**
-     * @test
-     * @dataProvider keys
      *
      * @param string $key
      */
+    #[Test]
+    #[DataProvider('keys')]
     public function constructsFromString($key)
     {
         $publicKey = new PublicKey($key);
@@ -50,9 +51,7 @@ final class PublicKeyTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function parsesKeyParts()
     {
         $key = <<<FILE
@@ -67,9 +66,7 @@ final class PublicKeyTest extends TestCase
         $this->assertEquals('test', $publicKey->getComment());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setsKeyParts()
     {
         $key = <<<FILE
@@ -93,9 +90,7 @@ final class PublicKeyTest extends TestCase
         $this->assertEquals('agent-forwarding ssh-dss BBB foo', (string) $publicKey);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function throwsExceptionOnInvalidType()
     {
         $this->expectException(InvalidKeyException::class);
@@ -104,9 +99,7 @@ final class PublicKeyTest extends TestCase
         new PublicKey('foo AAA');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function throwsExceptionOnEmptyKey()
     {
         $this->expectException(InvalidKeyException::class);
