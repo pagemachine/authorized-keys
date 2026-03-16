@@ -25,7 +25,8 @@
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
-        "phpunit/phpunit": "^10.0"
+        "phpunit/phpunit": "^10.0",
+        "rector/rector": "^2.2"
     },
     "autoload": {
         "psr-4": {
@@ -57,10 +58,13 @@
         "lint": [
             "@lint:php",
             "@lint:style",
-            "@analyze:php"
+            "@analyze:php",
+            "@php:rector:lint"
         ],
         "lint:php": "parallel-lint --show-deprecated --exclude vendor .",
         "lint:style": "php-cs-fixer fix --dry-run --diff",
+        "php:rector:fix": "rector",
+        "php:rector:lint": "rector --dry-run --no-progress-bar",
         "test:unit": "phpunit --colors=always"
     }
 }

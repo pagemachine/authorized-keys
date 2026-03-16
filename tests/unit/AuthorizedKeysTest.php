@@ -14,7 +14,7 @@ namespace Pagemachine\AuthorizedKeys\Test;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
 use org\bovigo\vfs\vfsStream;
 use Pagemachine\AuthorizedKeys\AuthorizedKeys;
 use Pagemachine\AuthorizedKeys\Exception\FilePermissionException;
@@ -28,10 +28,8 @@ use PHPUnit\Framework\TestCase;
  */
 final class AuthorizedKeysTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function constructsFromString()
+    #[Test]
+    public function constructsFromString(): void
     {
         $content = <<<FILE
             ssh-rsa AAA test
@@ -39,13 +37,11 @@ final class AuthorizedKeysTest extends TestCase
 
         $authorizedKeys = new AuthorizedKeys($content);
 
-        $this->assertEquals($content, (string) $authorizedKeys);
+        $this->assertSame($content, (string) $authorizedKeys);
     }
 
-    /**
-     * @test
-     */
-    public function constructsFromFile()
+    #[Test]
+    public function constructsFromFile(): void
     {
         $content = <<<FILE
             # A comment
@@ -59,13 +55,11 @@ final class AuthorizedKeysTest extends TestCase
 
         $authorizedKeys = AuthorizedKeys::fromFile($file->url());
 
-        $this->assertEquals($content, (string) $authorizedKeys);
+        $this->assertSame($content, (string) $authorizedKeys);
     }
 
-    /**
-     * @test
-     */
-    public function throwsExceptionOnFileReadError()
+    #[Test]
+    public function throwsExceptionOnFileReadError(): void
     {
         $directory = vfsStream::setup();
         $file = vfsStream::newFile('authorized_keys')
@@ -77,10 +71,8 @@ final class AuthorizedKeysTest extends TestCase
         AuthorizedKeys::fromFile($file->url());
     }
 
-    /**
-     * @test
-     */
-    public function writesToFile()
+    #[Test]
+    public function writesToFile(): void
     {
         $content = <<<FILE
             ssh-rsa AAA test
@@ -102,10 +94,8 @@ final class AuthorizedKeysTest extends TestCase
         $this->assertFalse($file->isWritable($file->getUser() + 1, $file->getGroup() + 1), 'File should not be writable by others');
     }
 
-    /**
-     * @test
-     */
-    public function keepsEmptyLinesAndCommentsWhenWritingToFile()
+    #[Test]
+    public function keepsEmptyLinesAndCommentsWhenWritingToFile(): void
     {
         $content = <<<FILE
             ssh-rsa AAA first
@@ -142,10 +132,8 @@ final class AuthorizedKeysTest extends TestCase
         $this->assertEquals($expected, $file->getContent());
     }
 
-    /**
-     * @test
-     */
-    public function throwsExceptionOnFileWriteError()
+    #[Test]
+    public function throwsExceptionOnFileWriteError(): void
     {
         $content = <<<FILE
             ssh-rsa AAA test
@@ -164,10 +152,8 @@ final class AuthorizedKeysTest extends TestCase
         $authorizedKeys->toFile($file->url());
     }
 
-    /**
-     * @test
-     */
-    public function throwsExceptionOnFilePermissionFixError()
+    #[Test]
+    public function throwsExceptionOnFilePermissionFixError(): void
     {
         $content = <<<FILE
             ssh-rsa AAA test
@@ -186,10 +172,8 @@ final class AuthorizedKeysTest extends TestCase
         $authorizedKeys->toFile($file->url());
     }
 
-    /**
-     * @test
-     */
-    public function getsKeys()
+    #[Test]
+    public function getsKeys(): void
     {
         $content = <<<FILE
             # A comment
@@ -206,10 +190,8 @@ final class AuthorizedKeysTest extends TestCase
         $this->assertContainsOnlyInstancesOf(PublicKey::class, $keys);
     }
 
-    /**
-     * @test
-     */
-    public function getsKeysByIteration()
+    #[Test]
+    public function getsKeysByIteration(): void
     {
         $content = <<<FILE
             # A comment
@@ -230,10 +212,8 @@ final class AuthorizedKeysTest extends TestCase
         $this->assertContainsOnlyInstancesOf(PublicKey::class, $keys);
     }
 
-    /**
-     * @test
-     */
-    public function addsKeys()
+    #[Test]
+    public function addsKeys(): void
     {
         $authorizedKeys = new AuthorizedKeys();
 
@@ -248,13 +228,11 @@ final class AuthorizedKeysTest extends TestCase
             ssh-rsa BBB second
             FILE;
 
-        $this->assertEquals($expected, (string) $authorizedKeys);
+        $this->assertSame($expected, (string) $authorizedKeys);
     }
 
-    /**
-     * @test
-     */
-    public function addsKeysOnce()
+    #[Test]
+    public function addsKeysOnce(): void
     {
         $authorizedKeys = new AuthorizedKeys();
 
@@ -267,13 +245,11 @@ final class AuthorizedKeysTest extends TestCase
             ssh-rsa AAA test
             FILE;
 
-        $this->assertEquals($expected, (string) $authorizedKeys);
+        $this->assertSame($expected, (string) $authorizedKeys);
     }
 
-    /**
-     * @test
-     */
-    public function addsKeysAvoidsMissingTrailingNewline()
+    #[Test]
+    public function addsKeysAvoidsMissingTrailingNewline(): void
     {
         $authorizedKeys = new AuthorizedKeys('ssh-rsa AAA first');
 
@@ -286,13 +262,11 @@ final class AuthorizedKeysTest extends TestCase
             ssh-rsa BBB second
             FILE;
 
-        $this->assertEquals($expected, (string) $authorizedKeys);
+        $this->assertSame($expected, (string) $authorizedKeys);
     }
 
-    /**
-     * @test
-     */
-    public function removesKeys()
+    #[Test]
+    public function removesKeys(): void
     {
         $content = <<<FILE
             # A comment
@@ -310,13 +284,11 @@ final class AuthorizedKeysTest extends TestCase
             ssh-rsa BBB second
             FILE;
 
-        $this->assertEquals($expected, (string) $authorizedKeys);
+        $this->assertSame($expected, (string) $authorizedKeys);
     }
 
-    /**
-     * @test
-     */
-    public function removesKeysOnce()
+    #[Test]
+    public function removesKeysOnce(): void
     {
         $content = <<<FILE
             ssh-rsa AAA first
@@ -333,13 +305,11 @@ final class AuthorizedKeysTest extends TestCase
             ssh-rsa BBB second
             FILE;
 
-        $this->assertEquals($expected, (string) $authorizedKeys);
+        $this->assertSame($expected, (string) $authorizedKeys);
     }
 
-    /**
-     * @test
-     */
-    public function handlesInvalidKeys()
+    #[Test]
+    public function handlesInvalidKeys(): void
     {
         $content = <<<FILE
             ssh-rsa AAA first
@@ -356,6 +326,6 @@ final class AuthorizedKeysTest extends TestCase
 
         $this->assertInstanceOf(InvalidPublicKey::class, $invalidKey);
 
-        $this->assertEquals($content, (string) $authorizedKeys);
+        $this->assertSame($content, (string) $authorizedKeys);
     }
 }

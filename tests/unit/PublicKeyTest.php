@@ -14,7 +14,8 @@ namespace Pagemachine\AuthorizedKeys\Test;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
 use Pagemachine\AuthorizedKeys\PublicKey;
 use PHPUnit\Framework\TestCase;
@@ -24,36 +25,25 @@ use PHPUnit\Framework\TestCase;
  */
 final class PublicKeyTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider keys
-     *
-     * @param string $key
-     */
-    public function constructsFromString($key)
+    #[Test]
+    #[DataProvider('keys')]
+    public function constructsFromString(string $key): void
     {
         $publicKey = new PublicKey($key);
 
-        $this->assertEquals($key, (string) $publicKey);
+        $this->assertSame($key, (string) $publicKey);
     }
 
-    /**
-     * @return array
-     */
-    public function keys(): array
+    public static function keys(): \Iterator
     {
-        return [
-            'minimum' => ['ssh-rsa AAA'],
-            'with comment' => ['ssh-rsa AAA test'],
-            'with options' => ['command="/bin/test" ssh-rsa AAA'],
-            'with options and comment' => ['command="/bin/test" ssh-rsa AAA test'],
-        ];
+        yield 'minimum' => ['ssh-rsa AAA'];
+        yield 'with comment' => ['ssh-rsa AAA test'];
+        yield 'with options' => ['command="/bin/test" ssh-rsa AAA'];
+        yield 'with options and comment' => ['command="/bin/test" ssh-rsa AAA test'];
     }
 
-    /**
-     * @test
-     */
-    public function parsesKeyParts()
+    #[Test]
+    public function parsesKeyParts(): void
     {
         $key = <<<FILE
             command="/bin/test" ssh-rsa AAA test
@@ -61,16 +51,14 @@ final class PublicKeyTest extends TestCase
 
         $publicKey = new PublicKey($key);
 
-        $this->assertEquals('command="/bin/test"', $publicKey->getOptions());
-        $this->assertEquals('ssh-rsa', $publicKey->getType());
-        $this->assertEquals('AAA', $publicKey->getKey());
-        $this->assertEquals('test', $publicKey->getComment());
+        $this->assertSame('command="/bin/test"', $publicKey->getOptions());
+        $this->assertSame('ssh-rsa', $publicKey->getType());
+        $this->assertSame('AAA', $publicKey->getKey());
+        $this->assertSame('test', $publicKey->getComment());
     }
 
-    /**
-     * @test
-     */
-    public function setsKeyParts()
+    #[Test]
+    public function setsKeyParts(): void
     {
         $key = <<<FILE
             command="/bin/test" ssh-rsa AAA test
@@ -79,24 +67,22 @@ final class PublicKeyTest extends TestCase
         $publicKey = new PublicKey($key);
 
         $publicKey->setOptions('agent-forwarding');
-        $this->assertEquals('agent-forwarding', $publicKey->getOptions());
+        $this->assertSame('agent-forwarding', $publicKey->getOptions());
 
         $publicKey->setType('ssh-dss');
-        $this->assertEquals('ssh-dss', $publicKey->getType());
+        $this->assertSame('ssh-dss', $publicKey->getType());
 
         $publicKey->setKey('BBB');
-        $this->assertEquals('BBB', $publicKey->getKey());
+        $this->assertSame('BBB', $publicKey->getKey());
 
         $publicKey->setComment('foo');
-        $this->assertEquals('foo', $publicKey->getComment());
+        $this->assertSame('foo', $publicKey->getComment());
 
-        $this->assertEquals('agent-forwarding ssh-dss BBB foo', (string) $publicKey);
+        $this->assertSame('agent-forwarding ssh-dss BBB foo', (string) $publicKey);
     }
 
-    /**
-     * @test
-     */
-    public function throwsExceptionOnInvalidType()
+    #[Test]
+    public function throwsExceptionOnInvalidType(): void
     {
         $this->expectException(InvalidKeyException::class);
         $this->expectExceptionCode(1486561051);
@@ -104,10 +90,8 @@ final class PublicKeyTest extends TestCase
         new PublicKey('foo AAA');
     }
 
-    /**
-     * @test
-     */
-    public function throwsExceptionOnEmptyKey()
+    #[Test]
+    public function throwsExceptionOnEmptyKey(): void
     {
         $this->expectException(InvalidKeyException::class);
         $this->expectExceptionCode(1486561621);

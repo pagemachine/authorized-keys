@@ -131,14 +131,14 @@ final class PublicKey implements KeyInterface
     {
         $parts = [];
 
-        if (!empty($this->options)) {
+        if ($this->options !== '') {
             $parts[] = $this->options;
         }
 
         $parts[] = $this->type;
         $parts[] = $this->key;
 
-        if (!empty($this->comment)) {
+        if ($this->comment !== '') {
             $parts[] = $this->comment;
         }
 
@@ -151,7 +151,7 @@ final class PublicKey implements KeyInterface
     private function parse(string $key): array
     {
         preg_match(self::KEY_PATTERN, $key, $parts);
-        $parts = array_map('trim', $parts);
+        $parts = array_map(trim(...), $parts);
 
         if (empty($parts['type'])) {
             throw new InvalidKeyException('Invalid key type', 1486561051);

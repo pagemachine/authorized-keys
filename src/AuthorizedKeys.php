@@ -22,7 +22,7 @@ use Pagemachine\AuthorizedKeys\InvalidPublicKey;
 /**
  * Manages the authorized_keys file
  */
-final class AuthorizedKeys implements \IteratorAggregate
+final class AuthorizedKeys implements \IteratorAggregate, \Stringable
 {
     /**
      * Lines of the file
@@ -146,12 +146,11 @@ final class AuthorizedKeys implements \IteratorAggregate
      * Parses content of a authorized_keys file
      *
      * @param string $content content of the authorized_keys file
-     * @return array
      */
     private function parse(string $content): array
     {
         $lines = explode("\n", $content);
-        $lines = array_map('trim', $lines);
+        $lines = array_map(trim(...), $lines);
 
         foreach ($lines as $i => $line) {
             if (!empty($line) && $line[0] !== '#') {
