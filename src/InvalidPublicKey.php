@@ -22,18 +22,12 @@ use Pagemachine\AuthorizedKeys\Exception\InvalidKeyException;
  */
 final readonly class InvalidPublicKey implements KeyInterface
 {
-    private string $key = '';
-
-    private InvalidKeyException $error;
-
     /**
      * @param string $key public key string
      * @param InvalidKeyException $error error with the key string
      */
-    public function __construct(string $key, InvalidKeyException $error)
+    public function __construct(private string $key, private InvalidKeyException $error)
     {
-        $this->key = $key;
-        $this->error = $error;
     }
 
     public function getOptions(): string
